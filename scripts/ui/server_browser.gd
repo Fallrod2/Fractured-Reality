@@ -91,7 +91,7 @@ func _sort_servers() -> void:
 
 func _display_servers() -> void:
 	"""Display servers in the list."""
-	var filter_text := filter_input.text.to_lower()
+	var filter_text: String = filter_input.text.to_lower()
 
 	for server_data in servers:
 		# Apply filter
