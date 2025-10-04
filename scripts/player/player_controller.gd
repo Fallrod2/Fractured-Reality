@@ -21,11 +21,20 @@ signal player_died(player_id: int)
 
 
 func _ready() -> void:
-	# Multiplayer setup will be added later
-	pass
+	# Set up multiplayer authority
+	if player_id > 0:
+		set_multiplayer_authority(player_id)
+
+	# Disable camera for non-local players
+	if $Camera2D and not is_multiplayer_authority():
+		$Camera2D.enabled = false
 
 
 func _physics_process(delta: float) -> void:
+	# Only process input for local player (authority)
+	if not is_multiplayer_authority():
+		return
+
 	# Apply gravity
 	if not is_on_floor():
 		velocity.y = min(velocity.y + gravity * delta, max_fall_speed)

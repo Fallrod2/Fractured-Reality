@@ -260,3 +260,67 @@ Before committing, verify:
 - [ ] All functions have type hints
 - [ ] Signals used instead of tight coupling
 
+## End-of-Session Workflow
+
+### ALWAYS Push Changes at End of Work Session
+
+After completing a work session, **ALWAYS** push your changes to the remote repository:
+
+1. **Stage all changes:**
+   ```bash
+   git add .
+   ```
+
+2. **Create commit with descriptive message:**
+   ```bash
+   git commit -m "[Type] Brief description
+
+   🤖 Generated with Claude Code
+
+   Co-Authored-By: Claude <noreply@anthropic.com>"
+   ```
+
+3. **Push to remote:**
+   ```bash
+   git push
+   ```
+
+### Pre-Push Checklist
+- [ ] All new files are tracked by git
+- [ ] No sensitive data (passwords, API keys) in commit
+- [ ] Commit message follows `[Type] Description` format
+- [ ] Changes have been tested (at minimum, game runs without errors)
+- [ ] No work-in-progress code that breaks the build
+
+### Commit Message Types
+- `[Feature]` - New functionality added
+- `[Fix]` - Bug fixes
+- `[Refactor]` - Code restructuring without behavior change
+- `[Multiplayer]` - Networking/multiplayer changes
+- `[UI]` - User interface updates
+- `[Art]` - Visual assets, shaders, effects
+- `[Sound]` - Audio implementation
+- `[Docs]` - Documentation updates
+
+**Example:**
+```bash
+git add .
+git commit -m "[Multiplayer] Implement internet multiplayer with lobby system
+
+- Added NetworkManager autoload for ENet peer-to-peer
+- Created lobby scene with player list UI
+- Implemented player synchronization and spawning
+- Added role assignment (Corruptor vs Repairers)
+
+🤖 Generated with Claude Code
+
+Co-Authored-By: Claude <noreply@anthropic.com>"
+git push
+```
+
+**IMPORTANT:** Never end a work session without pushing. This ensures:
+- Work is backed up remotely
+- Team members have latest changes
+- Progress is tracked in version history
+- Recovery is possible if local files are lost
+

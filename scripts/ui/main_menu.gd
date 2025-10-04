@@ -139,16 +139,41 @@ func _play_ui_sound(_sound_type: String) -> void:
 func _on_host_button_pressed() -> void:
 	print("Host button pressed")
 	_play_ui_sound("click")
-	# For now, load test level directly
-	# TODO: Navigate to lobby scene as host when multiplayer is implemented
-	get_tree().change_scene_to_file("res://scenes/levels/test_level.tscn")
+
+	# Create server
+	var error := NetworkManager.create_server()
+	if error != OK:
+		push_error("Failed to create server")
+		return
+
+	# Navigate to lobby as host
+	var lobby_scene: PackedScene = load("res://scenes/ui/lobby.tscn")
+	var lobby: Control = lobby_scene.instantiate()
+	get_tree().root.add_child(lobby)
+	lobby.setup_as_host(NetworkManager.DEFAULT_PORT)
+	queue_free()
 
 
 func _on_join_button_pressed() -> void:
 	print("Join button pressed")
 	_play_ui_sound("click")
-	# TODO: Navigate to lobby scene as client
-	# get_tree().change_scene_to_file("res://scenes/ui/lobby.tscn")
+
+	# For testing: join localhost
+	# TODO: Add IP input dialog
+	var server_ip := "127.0.0.1"
+	var server_port := NetworkManager.DEFAULT_PORT
+
+	var error := NetworkManager.join_server(server_ip, server_port)
+	if error != OK:
+		push_error("Failed to join server")
+		return
+
+	# Navigate to lobby as client
+	var lobby_scene: PackedScene = load("res://scenes/ui/lobby.tscn")
+	var lobby: Control = lobby_scene.instantiate()
+	get_tree().root.add_child(lobby)
+	lobby.setup_as_client(server_ip, server_port)
+	queue_free()
 
 
 func _on_settings_button_pressed() -> void:
