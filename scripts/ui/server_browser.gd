@@ -37,57 +37,39 @@ func _ready() -> void:
 	back_button.pressed.connect(_on_back_pressed)
 	direct_connect_button.pressed.connect(_on_direct_connect_pressed)
 
+	# Connect to server discovery signals
+	ServerDiscovery.server_discovered.connect(_on_server_discovered)
+	ServerDiscovery.server_list_updated.connect(_on_server_list_updated)
+
 	# Populate sort dropdown
 	sort_option.add_item("Players (High to Low)")
 	sort_option.add_item("Name (A-Z)")
 	sort_option.add_item("Ping (Low to High)")
 	sort_option.selected = 0
 
+	# Start scanning for servers
+	ServerDiscovery.start_scanning()
+
 	# Initial refresh
 	_refresh_servers()
 
 
-func _process(delta: float) -> void:
-	# Auto-refresh server list every 5 seconds
-	refresh_timer += delta
-	if refresh_timer >= REFRESH_INTERVAL:
-		refresh_timer = 0.0
-		_refresh_servers()
+func _process(_delta: float) -> void:
+	pass  # Server discovery now handled via signals
 
 
 func _refresh_servers() -> void:
-	"""Refresh the server list."""
+	"""Refresh the server list from discovered servers."""
 	print("ServerBrowser: Refreshing servers...")
 
-	# Clear existing list
-	for child in server_list.get_children():
-		child.queue_free()
-
-	# TODO: Implement actual server discovery
-	# For now, add localhost as a test server
-	servers = _discover_servers()
+	# Get discovered servers from ServerDiscovery
+	servers = ServerDiscovery.get_discovered_servers()
 
 	# Sort servers
 	_sort_servers()
 
 	# Display servers
 	_display_servers()
-
-
-func _discover_servers() -> Array:
-	"""Discover available servers on the network."""
-	# TODO: Implement actual server discovery via broadcast/LAN
-	# For now, return localhost test server
-	return [
-		{
-			"name": "Localhost Test Server",
-			"host": "127.0.0.1",
-			"port": NetworkManager.DEFAULT_PORT,
-			"players": 1,
-			"max_players": NetworkManager.MAX_PLAYERS,
-			"ping": 5,
-		}
-	]
 
 
 func _sort_servers() -> void:
@@ -147,9 +129,14 @@ func _on_server_join_requested(server_data: Dictionary) -> void:
 	"""Join the selected server."""
 	print("ServerBrowser: Joining server %s at %s:%d" % [server_data.name, server_data.host, server_data.port])
 
+	# Stop scanning for servers
+	ServerDiscovery.stop_scanning()
+
 	var error := NetworkManager.join_server(server_data.host, server_data.port)
 	if error != OK:
 		push_error("Failed to join server")
+		# Restart scanning on failure
+		ServerDiscovery.start_scanning()
 		return
 
 	# Navigate to lobby as client
@@ -162,6 +149,9 @@ func _on_server_join_requested(server_data: Dictionary) -> void:
 
 func _on_back_pressed() -> void:
 	print("ServerBrowser: Back to main menu")
+
+	# Stop scanning for servers
+	ServerDiscovery.stop_scanning()
 
 	# Return to main menu
 	get_tree().change_scene_to_file("res://scenes/ui/main_menu.tscn")
@@ -177,3 +167,15 @@ func _on_direct_connect_pressed() -> void:
 		"host": "127.0.0.1",
 		"port": NetworkManager.DEFAULT_PORT,
 	})
+
+
+func _on_server_discovered(server_info: Dictionary) -> void:
+	"""Called when a new server is discovered."""
+	print("ServerBrowser: Discovered server '%s' at %s" % [server_info.get("name", "Unknown"), server_info.get("host", "Unknown")])
+	_refresh_servers()
+
+
+func _on_server_list_updated(updated_servers: Array) -> void:
+	"""Called when the server list is updated."""
+	print("ServerBrowser: Server list updated - %d servers" % updated_servers.size())
+	_refresh_servers()

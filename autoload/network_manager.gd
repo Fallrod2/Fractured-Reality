@@ -53,6 +53,17 @@ func create_server(port: int = DEFAULT_PORT) -> Error:
 	local_player_id = multiplayer.get_unique_id()
 	_add_player(local_player_id, _create_player_data("Host"))
 
+	# Start broadcasting server info for discovery
+	var broadcast_info := {
+		"name": "Fractured Reality Server",
+		"port": port,
+		"players": players.size(),
+		"max_players": MAX_PLAYERS,
+		"host_id": local_player_id,
+		"ping": 0,  # Local server
+	}
+	ServerDiscovery.start_broadcasting(broadcast_info)
+
 	print("NetworkManager: Server created on port %d" % port)
 	server_created.emit()
 	return OK
@@ -78,6 +89,10 @@ func join_server(ip: String, port: int = DEFAULT_PORT) -> Error:
 
 ## Disconnect from current multiplayer session
 func disconnect_from_server() -> void:
+	# Stop broadcasting if we're the host
+	if is_hosting:
+		ServerDiscovery.stop_broadcasting()
+
 	if multiplayer.multiplayer_peer:
 		multiplayer.multiplayer_peer.close()
 		multiplayer.multiplayer_peer = null
@@ -144,6 +159,10 @@ func _add_player(player_id: int, player_data: Dictionary) -> void:
 	player_connected.emit(player_id, player_data)
 	print("NetworkManager: Player %d (%s) joined" % [player_id, player_data.name])
 
+	# Update broadcast info if we're hosting
+	if is_hosting:
+		_update_broadcast_info()
+
 
 ## Remove a player from the session
 func _remove_player(player_id: int) -> void:
@@ -152,6 +171,10 @@ func _remove_player(player_id: int) -> void:
 		players.erase(player_id)
 		player_disconnected.emit(player_id)
 		print("NetworkManager: Player %d (%s) left" % [player_id, player_name])
+
+		# Update broadcast info if we're hosting
+		if is_hosting:
+			_update_broadcast_info()
 
 
 ## Assign roles to players (1 Corruptor, rest Repairers)
@@ -266,3 +289,19 @@ func _rpc_start_game(updated_players: Dictionary) -> void:
 
 	get_tree().change_scene_to_file("res://scenes/levels/test_level.tscn")
 	game_started.emit()
+
+
+## Update broadcast info for server discovery
+func _update_broadcast_info() -> void:
+	if not is_hosting:
+		return
+
+	var broadcast_info := {
+		"name": "Fractured Reality Server",
+		"port": server_port,
+		"players": players.size(),
+		"max_players": MAX_PLAYERS,
+		"host_id": local_player_id,
+		"ping": 0,
+	}
+	ServerDiscovery.start_broadcasting(broadcast_info)
