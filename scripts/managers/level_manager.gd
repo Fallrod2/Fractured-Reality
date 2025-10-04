@@ -64,7 +64,7 @@ func _spawn_player(player_id: int, player_data: Dictionary, spawn_index: int) ->
 	player.player_id = player_id
 
 	# Set spawn position
-	var spawn_pos := spawn_points[spawn_index % spawn_points.size()]
+	var spawn_pos: Vector2 = spawn_points[spawn_index % spawn_points.size()]
 	player.position = spawn_pos
 
 	# Set player role
