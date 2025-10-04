@@ -171,7 +171,7 @@ func _on_settings_button_pressed() -> void:
 
 	# Load options menu
 	var options_scene: PackedScene = load("res://scenes/ui/options_menu.tscn")
-	var options_menu: Control = options_scene.instantiate()
+	var options_menu: CanvasLayer = options_scene.instantiate()
 	get_tree().root.add_child(options_menu)
 
 
