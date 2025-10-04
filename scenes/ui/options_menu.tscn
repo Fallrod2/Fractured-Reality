@@ -1,0 +1,264 @@
+[gd_scene load_steps=3 format=3 uid="uid://csj8wvxh3o7a1"]
+
+[ext_resource type="Theme" uid="uid://c6hc0fqc0hhfq" path="res://assets/ui/fractured_reality_theme.tres" id="1_theme"]
+[ext_resource type="Script" path="res://scripts/ui/options_menu.gd" id="2_script"]
+
+[node name="OptionsMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_theme")
+script = ExtResource("2_script")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0470588, 0.0509804, 0.0901961, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 100
+theme_override_constants/margin_top = 80
+theme_override_constants/margin_right = 100
+theme_override_constants/margin_bottom = 80
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="Title" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "SETTINGS"
+horizontal_alignment = 1
+
+[node name="Content" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="TabContainer" type="TabContainer" parent="MarginContainer/VBoxContainer/Content"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Graphics" type="ScrollContainer" parent="MarginContainer/VBoxContainer/Content/TabContainer"]
+layout_mode = 2
+
+[node name="Settings" type="VBoxContainer" parent="MarginContainer/VBoxContainer/Content/TabContainer/Graphics"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 15
+
+[node name="ResolutionLabel" type="Label" parent="MarginContainer/VBoxContainer/Content/TabContainer/Graphics/Settings"]
+layout_mode = 2
+text = "Resolution"
+
+[node name="ResolutionOption" type="OptionButton" parent="MarginContainer/VBoxContainer/Content/TabContainer/Graphics/Settings"]
+layout_mode = 2
+
+[node name="WindowModeLabel" type="Label" parent="MarginContainer/VBoxContainer/Content/TabContainer/Graphics/Settings"]
+layout_mode = 2
+text = "Window Mode"
+
+[node name="WindowModeOption" type="OptionButton" parent="MarginContainer/VBoxContainer/Content/TabContainer/Graphics/Settings"]
+layout_mode = 2
+
+[node name="VsyncCheck" type="CheckButton" parent="MarginContainer/VBoxContainer/Content/TabContainer/Graphics/Settings"]
+layout_mode = 2
+text = "VSync"
+
+[node name="QualityLabel" type="Label" parent="MarginContainer/VBoxContainer/Content/TabContainer/Graphics/Settings"]
+layout_mode = 2
+text = "Quality Preset"
+
+[node name="QualityOption" type="OptionButton" parent="MarginContainer/VBoxContainer/Content/TabContainer/Graphics/Settings"]
+layout_mode = 2
+
+[node name="MaxFpsLabel" type="Label" parent="MarginContainer/VBoxContainer/Content/TabContainer/Graphics/Settings"]
+layout_mode = 2
+text = "Max FPS (30-300)"
+
+[node name="MaxFpsSlider" type="HSlider" parent="MarginContainer/VBoxContainer/Content/TabContainer/Graphics/Settings"]
+layout_mode = 2
+min_value = 30.0
+max_value = 300.0
+value = 144.0
+tick_count = 10
+ticks_on_borders = true
+
+[node name="Audio" type="ScrollContainer" parent="MarginContainer/VBoxContainer/Content/TabContainer"]
+visible = false
+layout_mode = 2
+
+[node name="Settings" type="VBoxContainer" parent="MarginContainer/VBoxContainer/Content/TabContainer/Audio"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 15
+
+[node name="MasterLabel" type="Label" parent="MarginContainer/VBoxContainer/Content/TabContainer/Audio/Settings"]
+layout_mode = 2
+text = "Master Volume"
+
+[node name="MasterSlider" type="HSlider" parent="MarginContainer/VBoxContainer/Content/TabContainer/Audio/Settings"]
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+value = 1.0
+
+[node name="MusicLabel" type="Label" parent="MarginContainer/VBoxContainer/Content/TabContainer/Audio/Settings"]
+layout_mode = 2
+text = "Music Volume"
+
+[node name="MusicSlider" type="HSlider" parent="MarginContainer/VBoxContainer/Content/TabContainer/Audio/Settings"]
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+value = 0.8
+
+[node name="SfxLabel" type="Label" parent="MarginContainer/VBoxContainer/Content/TabContainer/Audio/Settings"]
+layout_mode = 2
+text = "SFX Volume"
+
+[node name="SfxSlider" type="HSlider" parent="MarginContainer/VBoxContainer/Content/TabContainer/Audio/Settings"]
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+value = 1.0
+
+[node name="UiLabel" type="Label" parent="MarginContainer/VBoxContainer/Content/TabContainer/Audio/Settings"]
+layout_mode = 2
+text = "UI Volume"
+
+[node name="UiSlider" type="HSlider" parent="MarginContainer/VBoxContainer/Content/TabContainer/Audio/Settings"]
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+value = 0.7
+
+[node name="MuteCheck" type="CheckButton" parent="MarginContainer/VBoxContainer/Content/TabContainer/Audio/Settings"]
+layout_mode = 2
+text = "Mute All Audio"
+
+[node name="Controls" type="ScrollContainer" parent="MarginContainer/VBoxContainer/Content/TabContainer"]
+visible = false
+layout_mode = 2
+
+[node name="Settings" type="VBoxContainer" parent="MarginContainer/VBoxContainer/Content/TabContainer/Controls"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 15
+
+[node name="Info" type="Label" parent="MarginContainer/VBoxContainer/Content/TabContainer/Controls/Settings"]
+layout_mode = 2
+text = "KEY BINDINGS"
+horizontal_alignment = 1
+
+[node name="MoveLeftLabel" type="Label" parent="MarginContainer/VBoxContainer/Content/TabContainer/Controls/Settings"]
+layout_mode = 2
+text = "Move Left"
+
+[node name="MoveLeftButton" type="Button" parent="MarginContainer/VBoxContainer/Content/TabContainer/Controls/Settings"]
+layout_mode = 2
+text = "A / Left Arrow"
+
+[node name="MoveRightLabel" type="Label" parent="MarginContainer/VBoxContainer/Content/TabContainer/Controls/Settings"]
+layout_mode = 2
+text = "Move Right"
+
+[node name="MoveRightButton" type="Button" parent="MarginContainer/VBoxContainer/Content/TabContainer/Controls/Settings"]
+layout_mode = 2
+text = "D / Right Arrow"
+
+[node name="JumpLabel" type="Label" parent="MarginContainer/VBoxContainer/Content/TabContainer/Controls/Settings"]
+layout_mode = 2
+text = "Jump"
+
+[node name="JumpButton" type="Button" parent="MarginContainer/VBoxContainer/Content/TabContainer/Controls/Settings"]
+layout_mode = 2
+text = "Space"
+
+[node name="Ability1Label" type="Label" parent="MarginContainer/VBoxContainer/Content/TabContainer/Controls/Settings"]
+layout_mode = 2
+text = "Ability 1"
+
+[node name="Ability1Button" type="Button" parent="MarginContainer/VBoxContainer/Content/TabContainer/Controls/Settings"]
+layout_mode = 2
+text = "Q"
+
+[node name="Ability2Label" type="Label" parent="MarginContainer/VBoxContainer/Content/TabContainer/Controls/Settings"]
+layout_mode = 2
+text = "Ability 2"
+
+[node name="Ability2Button" type="Button" parent="MarginContainer/VBoxContainer/Content/TabContainer/Controls/Settings"]
+layout_mode = 2
+text = "E"
+
+[node name="Ability3Label" type="Label" parent="MarginContainer/VBoxContainer/Content/TabContainer/Controls/Settings"]
+layout_mode = 2
+text = "Ability 3"
+
+[node name="Ability3Button" type="Button" parent="MarginContainer/VBoxContainer/Content/TabContainer/Controls/Settings"]
+layout_mode = 2
+text = "R"
+
+[node name="ResetBindingsButton" type="Button" parent="MarginContainer/VBoxContainer/Content/TabContainer/Controls/Settings"]
+layout_mode = 2
+text = "Reset to Defaults"
+
+[node name="Gameplay" type="ScrollContainer" parent="MarginContainer/VBoxContainer/Content/TabContainer"]
+visible = false
+layout_mode = 2
+
+[node name="Settings" type="VBoxContainer" parent="MarginContainer/VBoxContainer/Content/TabContainer/Gameplay"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 15
+
+[node name="ShowFpsCheck" type="CheckButton" parent="MarginContainer/VBoxContainer/Content/TabContainer/Gameplay/Settings"]
+layout_mode = 2
+text = "Show FPS Counter"
+
+[node name="ShowPingCheck" type="CheckButton" parent="MarginContainer/VBoxContainer/Content/TabContainer/Gameplay/Settings"]
+layout_mode = 2
+button_pressed = true
+text = "Show Network Ping"
+
+[node name="ScreenShakeCheck" type="CheckButton" parent="MarginContainer/VBoxContainer/Content/TabContainer/Gameplay/Settings"]
+layout_mode = 2
+button_pressed = true
+text = "Screen Shake Effects"
+
+[node name="CameraSmoothingCheck" type="CheckButton" parent="MarginContainer/VBoxContainer/Content/TabContainer/Gameplay/Settings"]
+layout_mode = 2
+button_pressed = true
+text = "Camera Smoothing"
+
+[node name="Buttons" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="ApplyButton" type="Button" parent="MarginContainer/VBoxContainer/Buttons"]
+custom_minimum_size = Vector2(200, 60)
+layout_mode = 2
+text = "APPLY"
+
+[node name="ResetButton" type="Button" parent="MarginContainer/VBoxContainer/Buttons"]
+custom_minimum_size = Vector2(200, 60)
+layout_mode = 2
+text = "RESET TO DEFAULTS"
+
+[node name="BackButton" type="Button" parent="MarginContainer/VBoxContainer/Buttons"]
+custom_minimum_size = Vector2(200, 60)
+layout_mode = 2
+text = "BACK"

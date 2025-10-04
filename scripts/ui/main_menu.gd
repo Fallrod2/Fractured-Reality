@@ -179,8 +179,11 @@ func _on_join_button_pressed() -> void:
 func _on_settings_button_pressed() -> void:
 	print("Settings button pressed")
 	_play_ui_sound("click")
-	# TODO: Navigate to settings scene
-	# get_tree().change_scene_to_file("res://scenes/ui/settings.tscn")
+
+	# Load options menu
+	var options_scene: PackedScene = load("res://scenes/ui/options_menu.tscn")
+	var options_menu: Control = options_scene.instantiate()
+	get_tree().root.add_child(options_menu)
 
 
 func _on_quit_button_pressed() -> void:
