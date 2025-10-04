@@ -1,0 +1,150 @@
+[gd_scene load_steps=3 format=3 uid="uid://bqxj8n4h5k2pm"]
+
+[ext_resource type="Theme" uid="uid://c6hc0fqc0hhfq" path="res://assets/ui/fractured_reality_theme.tres" id="1_theme"]
+[ext_resource type="Script" path="res://scripts/ui/online_lobby.gd" id="2_script"]
+
+[node name="OnlineLobby" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_theme")
+script = ExtResource("2_script")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0.121569, 0.247059, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 80
+theme_override_constants/margin_top = 60
+theme_override_constants/margin_right = 80
+theme_override_constants/margin_bottom = 60
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Header" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="MarginContainer/VBoxContainer/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 32
+theme_override_colors/font_color = Color(0, 1, 1, 1)
+text = "ONLINE LOBBY"
+
+[node name="UsernameLabel" type="Label" parent="MarginContainer/VBoxContainer/Header"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 1, 1, 1)
+text = "Logged in as: Player"
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="ContentContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 40
+
+[node name="FriendsPanel" type="VBoxContainer" parent="MarginContainer/VBoxContainer/ContentContainer"]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="FriendsTitle" type="Label" parent="MarginContainer/VBoxContainer/ContentContainer/FriendsPanel"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+theme_override_colors/font_color = Color(0, 1, 1, 1)
+text = "FRIENDS"
+
+[node name="AddFriendContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/ContentContainer/FriendsPanel"]
+layout_mode = 2
+
+[node name="AddFriendInput" type="LineEdit" parent="MarginContainer/VBoxContainer/ContentContainer/FriendsPanel/AddFriendContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Username..."
+
+[node name="AddFriendButton" type="Button" parent="MarginContainer/VBoxContainer/ContentContainer/FriendsPanel/AddFriendContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "ADD"
+
+[node name="FriendsScroll" type="ScrollContainer" parent="MarginContainer/VBoxContainer/ContentContainer/FriendsPanel"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="FriendsList" type="VBoxContainer" parent="MarginContainer/VBoxContainer/ContentContainer/FriendsPanel/FriendsScroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 5
+
+[node name="ActionsPanel" type="VBoxContainer" parent="MarginContainer/VBoxContainer/ContentContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="StatusLabel" type="Label" parent="MarginContainer/VBoxContainer/ContentContainer/ActionsPanel"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+theme_override_colors/font_color = Color(0.8, 0.8, 0.8, 1)
+text = "Ready to play!"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer/ContentContainer/ActionsPanel"]
+layout_mode = 2
+
+[node name="HostButton" type="Button" parent="MarginContainer/VBoxContainer/ContentContainer/ActionsPanel"]
+custom_minimum_size = Vector2(300, 60)
+layout_mode = 2
+text = "HOST GAME"
+
+[node name="InfoLabel" type="Label" parent="MarginContainer/VBoxContainer/ContentContainer/ActionsPanel"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+theme_override_colors/font_color = Color(0.6, 0.6, 0.6, 1)
+text = "Friends can join your game directly"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="HSeparator2" type="HSeparator" parent="MarginContainer/VBoxContainer/ContentContainer/ActionsPanel"]
+layout_mode = 2
+
+[node name="TestInfoLabel" type="Label" parent="MarginContainer/VBoxContainer/ContentContainer/ActionsPanel"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.8, 0, 1)
+text = "⚠ WAN P2P Test Mode
+Requires backend server running"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="Footer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="LogoutButton" type="Button" parent="MarginContainer/VBoxContainer/Footer"]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+text = "LOGOUT"
+
+[node name="BackButton" type="Button" parent="MarginContainer/VBoxContainer/Footer"]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+text = "BACK TO MENU"

@@ -175,6 +175,14 @@ func _on_settings_button_pressed() -> void:
 	get_tree().root.add_child(options_menu)
 
 
+func _on_online_play_button_pressed() -> void:
+	print("Online play button pressed")
+	_play_ui_sound("click")
+
+	# Navigate to account login
+	get_tree().change_scene_to_file("res://scenes/ui/account_login.tscn")
+
+
 func _on_quit_button_pressed() -> void:
 	print("Quitting game")
 	_play_ui_sound("click")
