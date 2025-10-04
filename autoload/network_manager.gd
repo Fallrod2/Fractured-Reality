@@ -121,8 +121,8 @@ func start_game() -> void:
 	# Assign roles (1 Corruptor, rest Repairers)
 	_assign_roles()
 
-	# Notify all clients to start
-	_rpc_start_game.rpc()
+	# Notify all clients to start with updated player data
+	_rpc_start_game.rpc(players)
 
 	# Load game scene
 	get_tree().change_scene_to_file("res://scenes/levels/test_level.tscn")
@@ -189,8 +189,11 @@ func _on_connected_to_server() -> void:
 	print("NetworkManager: Successfully connected to server")
 	local_player_id = multiplayer.get_unique_id()
 
-	# Send our player info to the server
+	# Add ourselves to local players list
 	var player_name := "Player_%d" % local_player_id
+	_add_player(local_player_id, _create_player_data(player_name))
+
+	# Send our player info to the server
 	_rpc_register_player.rpc_id(1, local_player_id, player_name)
 
 	connection_succeeded.emit()
@@ -223,29 +226,43 @@ func _rpc_request_player_info() -> void:
 func _rpc_register_player(player_id: int, player_name: String) -> void:
 	# Server receives player registration
 	if multiplayer.is_server():
-		_add_player(player_id, _create_player_data(player_name))
+		# Don't add ourselves twice (host is already added in create_server)
+		if player_id != 1:
+			_add_player(player_id, _create_player_data(player_name))
 
 		# Send all existing players to the new player
 		for pid in players.keys():
 			var pdata: Dictionary = players[pid]
 			_rpc_add_player.rpc_id(player_id, pid, pdata)
 
-		# Broadcast new player to all other clients
+		# Broadcast new player to all other clients (except the new player themselves)
 		for pid in players.keys():
-			if pid != player_id and pid != 1:  # Don't send to self or server
+			if pid != player_id:
 				_rpc_add_player.rpc_id(pid, player_id, players[player_id])
 
 
 @rpc("authority", "call_remote", "reliable")
 func _rpc_add_player(player_id: int, player_data: Dictionary) -> void:
 	# Client receives player info from server
+	print("NetworkManager: Received player data for %d (%s)" % [player_id, player_data.get("name", "Unknown")])
 	if player_id != multiplayer.get_unique_id():  # Don't add ourselves twice
 		_add_player(player_id, player_data)
+	else:
+		print("NetworkManager: Skipping adding ourselves (already in list)")
 
 
 @rpc("authority", "call_remote", "reliable")
-func _rpc_start_game() -> void:
-	# All clients receive game start signal
-	print("NetworkManager: Game starting!")
+func _rpc_start_game(updated_players: Dictionary) -> void:
+	# All clients receive game start signal with updated player data
+	print("NetworkManager: Game starting! Received %d players" % updated_players.size())
+
+	# Update our local players dictionary with the authoritative data from server
+	players = updated_players.duplicate(true)
+
+	# Debug: Print all players
+	for player_id in players.keys():
+		var pdata: Dictionary = players[player_id]
+		print("NetworkManager: Player %d (%s) - Corruptor: %s" % [player_id, pdata.get("name", "Unknown"), pdata.get("is_corruptor", false)])
+
 	get_tree().change_scene_to_file("res://scenes/levels/test_level.tscn")
 	game_started.emit()

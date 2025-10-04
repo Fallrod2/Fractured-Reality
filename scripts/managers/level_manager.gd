@@ -51,8 +51,10 @@ func _spawn_players() -> void:
 	var all_players := NetworkManager.get_all_players()
 	var spawn_index := 0
 
+	print("LevelManager: Spawning %d players" % all_players.size())
 	for player_id in all_players.keys():
 		var player_data: Dictionary = all_players[player_id]
+		print("LevelManager: Spawning player %d (%s)" % [player_id, player_data.get("name", "Unknown")])
 		_spawn_player(player_id, player_data, spawn_index)
 		spawn_index += 1
 
