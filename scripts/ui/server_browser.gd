@@ -2,7 +2,7 @@ extends Control
 ## Server Browser - Displays available game servers
 ## Allows filtering and sorting of servers
 
-@onready var server_list := $MarginContainer/VBoxContainer/Content/ScrollContainer/ServerList
+@onready var server_list := $MarginContainer/VBoxContainer/Content/ServerList
 @onready var refresh_button := $MarginContainer/VBoxContainer/Header/RefreshButton
 @onready var sort_option := $MarginContainer/VBoxContainer/Header/SortOption
 @onready var filter_input := $MarginContainer/VBoxContainer/Header/FilterInput
