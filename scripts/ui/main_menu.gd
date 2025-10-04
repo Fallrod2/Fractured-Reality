@@ -34,17 +34,17 @@ func _setup_glitch_background() -> void:
 		push_warning("MainMenu: Background node not found")
 		return
 
-	var material := ShaderMaterial.new()
-	material.shader = glitch_shader
+	var shader_material := ShaderMaterial.new()
+	shader_material.shader = glitch_shader
 	# Set shader parameters for subtle glitch effect
-	material.set_shader_parameter("glitch_strength", 0.03)
-	material.set_shader_parameter("scan_line_speed", 0.5)
-	material.set_shader_parameter("scan_line_density", 600.0)
-	material.set_shader_parameter("noise_amount", 0.015)
-	material.set_shader_parameter("horizontal_shake", 0.005)
-	material.set_shader_parameter("glitch_color", Color(0.0, 1.0, 1.0, 0.2))
+	shader_material.set_shader_parameter("glitch_strength", 0.03)
+	shader_material.set_shader_parameter("scan_line_speed", 0.5)
+	shader_material.set_shader_parameter("scan_line_density", 600.0)
+	shader_material.set_shader_parameter("noise_amount", 0.015)
+	shader_material.set_shader_parameter("horizontal_shake", 0.005)
+	shader_material.set_shader_parameter("glitch_color", Color(0.0, 1.0, 1.0, 0.2))
 
-	background.material = material
+	background.material = shader_material
 
 
 func _setup_button_animations() -> void:
@@ -128,10 +128,10 @@ func _on_button_released_anim(button: Button) -> void:
 	tween.tween_property(button, "scale", Vector2(1.1, 1.1), 0.1)
 
 
-func _play_ui_sound(sound_type: String) -> void:
+func _play_ui_sound(_sound_type: String) -> void:
 	"""Play UI sound effect (placeholder for future audio implementation)."""
 	# TODO: Implement audio system
-	# Example: $AudioStreamPlayer.stream = load("res://assets/audio/ui_" + sound_type + ".ogg")
+	# Example: $AudioStreamPlayer.stream = load("res://assets/audio/ui_" + _sound_type + ".ogg")
 	# $AudioStreamPlayer.play()
 	pass
 
@@ -139,8 +139,9 @@ func _play_ui_sound(sound_type: String) -> void:
 func _on_host_button_pressed() -> void:
 	print("Host button pressed")
 	_play_ui_sound("click")
-	# TODO: Navigate to lobby scene as host
-	# get_tree().change_scene_to_file("res://scenes/ui/lobby.tscn")
+	# For now, load test level directly
+	# TODO: Navigate to lobby scene as host when multiplayer is implemented
+	get_tree().change_scene_to_file("res://scenes/levels/test_level.tscn")
 
 
 func _on_join_button_pressed() -> void:

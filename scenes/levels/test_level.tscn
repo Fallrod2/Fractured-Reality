@@ -1,0 +1,109 @@
+[gd_scene load_steps=4 format=3 uid="uid://c8vj2k5m9xh4d"]
+
+[ext_resource type="PackedScene" uid="uid://b4k8m2x9vh3wr" path="res://scenes/characters/player.tscn" id="1_player"]
+[ext_resource type="Script" path="res://scripts/managers/level_manager.gd" id="2_level_manager"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_platform"]
+size = Vector2(800, 50)
+
+[node name="TestLevel" type="Node2D"]
+script = ExtResource("2_level_manager")
+
+[node name="Background" type="ColorRect" parent="."]
+offset_left = -960.0
+offset_top = -540.0
+offset_right = 960.0
+offset_bottom = 540.0
+color = Color(0, 0.121569, 0.247059, 1)
+
+[node name="Platforms" type="Node2D" parent="."]
+
+[node name="Ground" type="StaticBody2D" parent="Platforms"]
+position = Vector2(0, 400)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/Ground"]
+shape = SubResource("RectangleShape2D_platform")
+
+[node name="Visual" type="ColorRect" parent="Platforms/Ground"]
+offset_left = -400.0
+offset_top = -25.0
+offset_right = 400.0
+offset_bottom = 25.0
+color = Color(0.498039, 0, 1, 0.5)
+
+[node name="Platform1" type="StaticBody2D" parent="Platforms"]
+position = Vector2(-300, 200)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/Platform1"]
+shape = SubResource("RectangleShape2D_platform")
+scale = Vector2(0.5, 1)
+
+[node name="Visual" type="ColorRect" parent="Platforms/Platform1"]
+offset_left = -200.0
+offset_top = -25.0
+offset_right = 200.0
+offset_bottom = 25.0
+color = Color(0.498039, 0, 1, 0.5)
+
+[node name="Platform2" type="StaticBody2D" parent="Platforms"]
+position = Vector2(300, 100)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/Platform2"]
+shape = SubResource("RectangleShape2D_platform")
+scale = Vector2(0.5, 1)
+
+[node name="Visual" type="ColorRect" parent="Platforms/Platform2"]
+offset_left = -200.0
+offset_top = -25.0
+offset_right = 200.0
+offset_bottom = 25.0
+color = Color(0.498039, 0, 1, 0.5)
+
+[node name="Platform3" type="StaticBody2D" parent="Platforms"]
+position = Vector2(0, -50)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/Platform3"]
+shape = SubResource("RectangleShape2D_platform")
+scale = Vector2(0.4, 1)
+
+[node name="Visual" type="ColorRect" parent="Platforms/Platform3"]
+offset_left = -160.0
+offset_top = -25.0
+offset_right = 160.0
+offset_bottom = 25.0
+color = Color(0.498039, 0, 1, 0.5)
+
+[node name="Walls" type="Node2D" parent="."]
+
+[node name="LeftWall" type="StaticBody2D" parent="Walls"]
+position = Vector2(-500, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/LeftWall"]
+shape = SubResource("RectangleShape2D_platform")
+rotation = 1.5708
+scale = Vector2(2, 0.1)
+
+[node name="Visual" type="ColorRect" parent="Walls/LeftWall"]
+offset_left = -20.0
+offset_top = -500.0
+offset_right = 20.0
+offset_bottom = 500.0
+color = Color(0.498039, 0, 1, 0.3)
+
+[node name="RightWall" type="StaticBody2D" parent="Walls"]
+position = Vector2(500, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/RightWall"]
+shape = SubResource("RectangleShape2D_platform")
+rotation = 1.5708
+scale = Vector2(2, 0.1)
+
+[node name="Visual" type="ColorRect" parent="Walls/RightWall"]
+offset_left = -20.0
+offset_top = -500.0
+offset_right = 20.0
+offset_bottom = 500.0
+color = Color(0.498039, 0, 1, 0.3)
+
+[node name="Player" parent="." instance=ExtResource("1_player")]
+position = Vector2(0, 300)
