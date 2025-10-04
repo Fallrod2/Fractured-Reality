@@ -39,7 +39,7 @@ func _ready() -> void:
 
 
 func _on_add_friend_pressed() -> void:
-	var friend_username := add_friend_input.text.strip_edges()
+	var friend_username: String = add_friend_input.text.strip_edges()
 
 	if friend_username.is_empty():
 		status_label.text = "Enter a username to add"

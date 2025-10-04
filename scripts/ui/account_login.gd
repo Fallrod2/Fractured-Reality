@@ -54,19 +54,19 @@ func _update_mode_ui() -> void:
 
 
 func _on_action_pressed() -> void:
-	var username := username_input.text.strip_edges()
-	var password := password_input.text
+	var username: String = username_input.text.strip_edges()
+	var password: String = password_input.text
 
 	# Validation
 	if username.is_empty() or password.is_empty():
 		error_label.text = "Username and password required"
 		return
 
-	if username.length < 3:
+	if username.length() < 3:
 		error_label.text = "Username must be at least 3 characters"
 		return
 
-	if password.length < 6:
+	if password.length() < 6:
 		error_label.text = "Password must be at least 6 characters"
 		return
 
