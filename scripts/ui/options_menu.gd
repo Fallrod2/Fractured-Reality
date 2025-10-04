@@ -1,37 +1,37 @@
-extends Control
+extends CanvasLayer
 ## Options Menu - Comprehensive settings interface
 ## Handles Graphics, Audio, Controls, and Gameplay settings
 
 # Tab nodes
-@onready var tabs := $MarginContainer/VBoxContainer/Content/TabContainer
-@onready var graphics_tab := $MarginContainer/VBoxContainer/Content/TabContainer/Graphics
-@onready var audio_tab := $MarginContainer/VBoxContainer/Content/TabContainer/Audio
-@onready var controls_tab := $MarginContainer/VBoxContainer/Content/TabContainer/Controls
-@onready var gameplay_tab := $MarginContainer/VBoxContainer/Content/TabContainer/Gameplay
+@onready var tabs := $Control/MarginContainer/VBoxContainer/Content/TabContainer
+@onready var graphics_tab := $Control/MarginContainer/VBoxContainer/Content/TabContainer/Graphics
+@onready var audio_tab := $Control/MarginContainer/VBoxContainer/Content/TabContainer/Audio
+@onready var controls_tab := $Control/MarginContainer/VBoxContainer/Content/TabContainer/Controls
+@onready var gameplay_tab := $Control/MarginContainer/VBoxContainer/Content/TabContainer/Gameplay
 
 # Graphics controls
-@onready var resolution_option := $MarginContainer/VBoxContainer/Content/TabContainer/Graphics/Settings/ResolutionOption
-@onready var window_mode_option := $MarginContainer/VBoxContainer/Content/TabContainer/Graphics/Settings/WindowModeOption
-@onready var vsync_check := $MarginContainer/VBoxContainer/Content/TabContainer/Graphics/Settings/VsyncCheck
-@onready var quality_option := $MarginContainer/VBoxContainer/Content/TabContainer/Graphics/Settings/QualityOption
-@onready var max_fps_slider := $MarginContainer/VBoxContainer/Content/TabContainer/Graphics/Settings/MaxFpsSlider
+@onready var resolution_option := $Control/MarginContainer/VBoxContainer/Content/TabContainer/Graphics/Settings/ResolutionOption
+@onready var window_mode_option := $Control/MarginContainer/VBoxContainer/Content/TabContainer/Graphics/Settings/WindowModeOption
+@onready var vsync_check := $Control/MarginContainer/VBoxContainer/Content/TabContainer/Graphics/Settings/VsyncCheck
+@onready var quality_option := $Control/MarginContainer/VBoxContainer/Content/TabContainer/Graphics/Settings/QualityOption
+@onready var max_fps_slider := $Control/MarginContainer/VBoxContainer/Content/TabContainer/Graphics/Settings/MaxFpsSlider
 
 # Audio controls
-@onready var master_slider := $MarginContainer/VBoxContainer/Content/TabContainer/Audio/Settings/MasterSlider
-@onready var music_slider := $MarginContainer/VBoxContainer/Content/TabContainer/Audio/Settings/MusicSlider
-@onready var sfx_slider := $MarginContainer/VBoxContainer/Content/TabContainer/Audio/Settings/SfxSlider
-@onready var ui_slider := $MarginContainer/VBoxContainer/Content/TabContainer/Audio/Settings/UiSlider
-@onready var mute_check := $MarginContainer/VBoxContainer/Content/TabContainer/Audio/Settings/MuteCheck
+@onready var master_slider := $Control/MarginContainer/VBoxContainer/Content/TabContainer/Audio/Settings/MasterSlider
+@onready var music_slider := $Control/MarginContainer/VBoxContainer/Content/TabContainer/Audio/Settings/MusicSlider
+@onready var sfx_slider := $Control/MarginContainer/VBoxContainer/Content/TabContainer/Audio/Settings/SfxSlider
+@onready var ui_slider := $Control/MarginContainer/VBoxContainer/Content/TabContainer/Audio/Settings/UiSlider
+@onready var mute_check := $Control/MarginContainer/VBoxContainer/Content/TabContainer/Audio/Settings/MuteCheck
 
 # Gameplay controls
-@onready var show_fps_check := $MarginContainer/VBoxContainer/Content/TabContainer/Gameplay/Settings/ShowFpsCheck
-@onready var show_ping_check := $MarginContainer/VBoxContainer/Content/TabContainer/Gameplay/Settings/ShowPingCheck
-@onready var screen_shake_check := $MarginContainer/VBoxContainer/Content/TabContainer/Gameplay/Settings/ScreenShakeCheck
+@onready var show_fps_check := $Control/MarginContainer/VBoxContainer/Content/TabContainer/Gameplay/Settings/ShowFpsCheck
+@onready var show_ping_check := $Control/MarginContainer/VBoxContainer/Content/TabContainer/Gameplay/Settings/ShowPingCheck
+@onready var screen_shake_check := $Control/MarginContainer/VBoxContainer/Content/TabContainer/Gameplay/Settings/ScreenShakeCheck
 
 # Buttons
-@onready var apply_button := $MarginContainer/VBoxContainer/Buttons/ApplyButton
-@onready var reset_button := $MarginContainer/VBoxContainer/Buttons/ResetButton
-@onready var back_button := $MarginContainer/VBoxContainer/Buttons/BackButton
+@onready var apply_button := $Control/MarginContainer/VBoxContainer/Buttons/ApplyButton
+@onready var reset_button := $Control/MarginContainer/VBoxContainer/Buttons/ResetButton
+@onready var back_button := $Control/MarginContainer/VBoxContainer/Buttons/BackButton
 
 var resolutions: Array[Vector2i] = []
 var pending_changes := false
@@ -66,7 +66,7 @@ func _ready() -> void:
 	apply_button.disabled = true
 
 	# Add glitch effect to title
-	_add_glitch_effect($MarginContainer/VBoxContainer/Title)
+	_add_glitch_effect($Control/MarginContainer/VBoxContainer/Title)
 
 
 func _connect_signals() -> void:

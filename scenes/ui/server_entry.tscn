@@ -1,0 +1,45 @@
+[gd_scene load_steps=3 format=3 uid="uid://c7h4kp2x8vn3w"]
+
+[ext_resource type="Theme" uid="uid://c6hc0fqc0hhfq" path="res://assets/ui/fractured_reality_theme.tres" id="1_theme"]
+[ext_resource type="Script" path="res://scripts/ui/server_entry.gd" id="2_script"]
+
+[node name="ServerEntry" type="PanelContainer"]
+custom_minimum_size = Vector2(0, 80)
+theme = ExtResource("1_theme")
+script = ExtResource("2_script")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="InfoContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ServerName" type="Label" parent="MarginContainer/HBoxContainer/InfoContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Server Name"
+
+[node name="PlayersLabel" type="Label" parent="MarginContainer/HBoxContainer/InfoContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "0/5 players"
+
+[node name="PingLabel" type="Label" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "999 ms"
+vertical_alignment = 1
+
+[node name="JoinButton" type="Button" parent="MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+text = "JOIN"

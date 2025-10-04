@@ -158,21 +158,10 @@ func _on_join_button_pressed() -> void:
 	print("Join button pressed")
 	_play_ui_sound("click")
 
-	# For testing: join localhost
-	# TODO: Add IP input dialog
-	var server_ip := "127.0.0.1"
-	var server_port := NetworkManager.DEFAULT_PORT
-
-	var error := NetworkManager.join_server(server_ip, server_port)
-	if error != OK:
-		push_error("Failed to join server")
-		return
-
-	# Navigate to lobby as client
-	var lobby_scene: PackedScene = load("res://scenes/ui/lobby.tscn")
-	var lobby: Control = lobby_scene.instantiate()
-	get_tree().root.add_child(lobby)
-	lobby.setup_as_client(server_ip, server_port)
+	# Open server browser
+	var browser_scene: PackedScene = load("res://scenes/ui/server_browser.tscn")
+	var browser: Control = browser_scene.instantiate()
+	get_tree().root.add_child(browser)
 	queue_free()
 
 
