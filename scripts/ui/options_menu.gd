@@ -65,6 +65,9 @@ func _ready() -> void:
 	# Initial apply button state
 	apply_button.disabled = true
 
+	# Add glitch effect to title
+	_add_glitch_effect($MarginContainer/VBoxContainer/Title)
+
 
 func _connect_signals() -> void:
 	# Graphics
@@ -177,7 +180,26 @@ func _on_reset_pressed() -> void:
 
 func _on_back_pressed() -> void:
 	if pending_changes:
-		# TODO: Show confirmation dialog
-		print("OptionsMenu: Discarding unsaved changes")
+		# Create confirmation dialog
+		var dialog := ConfirmationDialog.new()
+		dialog.dialog_text = "You have unsaved changes. Discard them?"
+		dialog.confirmed.connect(_discard_and_close)
+		dialog.canceled.connect(func(): dialog.queue_free())
+		add_child(dialog)
+		dialog.popup_centered()
+	else:
+		queue_free()
 
+
+func _discard_and_close() -> void:
+	print("OptionsMenu: Discarding unsaved changes")
 	queue_free()
+
+
+func _add_glitch_effect(label: Label) -> void:
+	"""Add subtle horizontal glitch animation to label."""
+	var original_x := label.position.x
+	var tween := create_tween().set_loops()
+	tween.tween_property(label, "position:x", original_x + 2, 0.05)
+	tween.tween_property(label, "position:x", original_x, 0.05)
+	tween.tween_interval(randf_range(2.0, 5.0))

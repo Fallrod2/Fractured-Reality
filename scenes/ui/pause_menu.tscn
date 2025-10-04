@@ -3,12 +3,16 @@
 [ext_resource type="Theme" uid="uid://c6hc0fqc0hhfq" path="res://assets/ui/fractured_reality_theme.tres" id="1_theme"]
 [ext_resource type="Script" path="res://scripts/ui/pause_menu.gd" id="2_script"]
 [ext_resource type="Shader" path="res://assets/shaders/ui_glitch.gdshader" id="3_shader"]
+[ext_resource type="FontFile" uid="uid://dqfmg2b8nh5d8" path="res://assets/fonts/Orbitron-Bold.ttf" id="4_font_bold"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_pause"]
 shader = ExtResource("3_shader")
-shader_parameter/glitch_intensity = 0.3
-shader_parameter/scan_line_amount = 0.05
+shader_parameter/glitch_strength = 0.05
+shader_parameter/scan_line_speed = 1.0
+shader_parameter/scan_line_density = 800.0
 shader_parameter/noise_amount = 0.02
+shader_parameter/horizontal_shake = 0.01
+shader_parameter/glitch_color = Color(0, 1, 1, 0.3)
 
 [node name="PauseMenu" type="Control"]
 process_mode = 3
@@ -28,7 +32,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0, 0, 0, 0.7)
+color = Color(0, 0, 0, 0.5)
 
 [node name="Panel" type="PanelContainer" parent="."]
 material = SubResource("ShaderMaterial_pause")
@@ -58,6 +62,9 @@ theme_override_constants/separation = 30
 
 [node name="Title" type="Label" parent="Panel/MarginContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("4_font_bold")
+theme_override_font_sizes/font_size = 36
+theme_override_colors/font_color = Color(0, 1, 1, 1)
 text = "PAUSED"
 horizontal_alignment = 1
 

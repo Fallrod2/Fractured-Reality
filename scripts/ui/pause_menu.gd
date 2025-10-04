@@ -20,6 +20,9 @@ func _ready() -> void:
 	options_button.pressed.connect(_on_options_pressed)
 	quit_button.pressed.connect(_on_quit_pressed)
 
+	# Add glitch effect to title
+	_add_glitch_effect($Panel/MarginContainer/VBoxContainer/Title)
+
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("pause"):
@@ -36,7 +39,14 @@ func toggle_pause() -> void:
 func pause_game() -> void:
 	is_paused = true
 	get_tree().paused = true
+
+	# Fade in with glitch effect
+	modulate.a = 0.0
 	show()
+
+	var tween := create_tween()
+	tween.tween_property(self, "modulate:a", 1.0, 0.3)
+
 	resume_button.grab_focus()
 	print("PauseMenu: Game paused")
 
@@ -80,3 +90,12 @@ func _on_quit_pressed() -> void:
 
 	# Return to main menu
 	get_tree().change_scene_to_file("res://scenes/ui/main_menu.tscn")
+
+
+func _add_glitch_effect(label: Label) -> void:
+	"""Add subtle horizontal glitch animation to label."""
+	var original_x := label.position.x
+	var tween := create_tween().set_loops()
+	tween.tween_property(label, "position:x", original_x + 2, 0.05)
+	tween.tween_property(label, "position:x", original_x, 0.05)
+	tween.tween_interval(randf_range(2.0, 5.0))

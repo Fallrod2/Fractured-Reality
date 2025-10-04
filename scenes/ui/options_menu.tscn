@@ -2,6 +2,7 @@
 
 [ext_resource type="Theme" uid="uid://c6hc0fqc0hhfq" path="res://assets/ui/fractured_reality_theme.tres" id="1_theme"]
 [ext_resource type="Script" path="res://scripts/ui/options_menu.gd" id="2_script"]
+[ext_resource type="FontFile" uid="uid://dqfmg2b8nh5d8" path="res://assets/fonts/Orbitron-Bold.ttf" id="3_font_bold"]
 
 [node name="OptionsMenu" type="Control"]
 layout_mode = 3
@@ -20,7 +21,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.0470588, 0.0509804, 0.0901961, 1)
+color = Color(0, 0.121569, 0.247059, 1)
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -40,6 +41,9 @@ theme_override_constants/separation = 30
 
 [node name="Title" type="Label" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_font_bold")
+theme_override_font_sizes/font_size = 36
+theme_override_colors/font_color = Color(0, 1, 1, 1)
 text = "SETTINGS"
 horizontal_alignment = 1
 
