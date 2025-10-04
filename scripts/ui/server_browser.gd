@@ -24,6 +24,10 @@ enum SortMode {
 }
 var current_sort := SortMode.PLAYERS
 
+# Auto-refresh
+var refresh_timer := 0.0
+const REFRESH_INTERVAL := 5.0  # 5 seconds
+
 
 func _ready() -> void:
 	# Connect signals
@@ -41,6 +45,14 @@ func _ready() -> void:
 
 	# Initial refresh
 	_refresh_servers()
+
+
+func _process(delta: float) -> void:
+	# Auto-refresh server list every 5 seconds
+	refresh_timer += delta
+	if refresh_timer >= REFRESH_INTERVAL:
+		refresh_timer = 0.0
+		_refresh_servers()
 
 
 func _refresh_servers() -> void:
@@ -91,6 +103,10 @@ func _sort_servers() -> void:
 
 func _display_servers() -> void:
 	"""Display servers in the list."""
+	# Clear existing entries first
+	for child in server_list.get_children():
+		child.queue_free()
+
 	var filter_text: String = filter_input.text.to_lower()
 
 	for server_data in servers:

@@ -8,6 +8,10 @@ extends CanvasLayer
 var show_fps := false
 var show_ping := false
 
+# Ping update timer
+var ping_timer := 0.0
+const PING_UPDATE_INTERVAL := 1.0  # 1 second
+
 
 func _ready() -> void:
 	# Load settings
@@ -20,12 +24,17 @@ func _ready() -> void:
 	_update_visibility()
 
 
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
+	# Update FPS every frame
 	if show_fps and fps_label:
 		fps_label.text = "FPS: %d" % Engine.get_frames_per_second()
 
+	# Update ping once per second
 	if show_ping and ping_label:
-		_update_ping()
+		ping_timer += delta
+		if ping_timer >= PING_UPDATE_INTERVAL:
+			ping_timer = 0.0
+			_update_ping()
 
 
 func _update_ping() -> void:
