@@ -59,6 +59,57 @@ Asymmetric 5-player multiplayer game (4 Repairers vs 1 Corruptor) with time mani
 
 ## Code Style & Conventions
 
+### Task Management with TodoWrite Tool
+
+**CRITICAL: ALWAYS use the TodoWrite tool to track tasks and progress.**
+
+Claude Code provides a TodoWrite tool that you MUST use for any non-trivial work:
+
+**When to Use:**
+- ✅ **Multi-step tasks** - Any task requiring 3+ distinct steps
+- ✅ **Complex features** - New systems, UI components, networking code
+- ✅ **User requests with multiple parts** - Lists, numbered items, comma-separated tasks
+- ✅ **Bug fixes with investigation** - When you need to search, analyze, then fix
+- ✅ **At the START of work** - Create todos immediately when beginning
+- ✅ **Throughout work** - Update status (pending → in_progress → completed) as you go
+
+**When NOT to Use:**
+- ❌ Single trivial tasks (e.g., "fix this typo")
+- ❌ Simple questions with no action required
+- ❌ Tasks completable in 1-2 trivial steps
+
+**Best Practices:**
+1. **Create todos FIRST** - Before starting work, write out all tasks
+2. **Use descriptive names** - "Fix player synchronization" not "Fix bug"
+3. **Mark in_progress BEFORE working** - Only ONE task in_progress at a time
+4. **Complete immediately** - Mark completed as soon as task is done, don't batch
+5. **Update regularly** - Keep the list current throughout the session
+6. **Clean up** - Remove or complete stale todos
+
+**Example Workflow:**
+```
+User: "Add a pause menu with options and quit buttons"
+
+Claude: [Creates todos]
+1. [pending] Create pause menu scene
+2. [pending] Add resume button functionality
+3. [pending] Add options button functionality
+4. [pending] Add quit button functionality
+5. [pending] Test pause menu in-game
+
+Claude: [Starts work]
+TodoWrite: Mark task 1 as in_progress
+[Works on pause menu scene]
+TodoWrite: Mark task 1 as completed, task 2 as in_progress
+[Implements resume button]
+TodoWrite: Mark task 2 as completed, task 3 as in_progress
+...
+```
+
+**Remember:** The TodoWrite tool is your task tracker. Use it religiously to stay organized and show progress!
+
+---
+
 ### GDScript Standards
 - Use `snake_case` for variables, functions, and file names
 - Use `PascalCase` for class names and scene node types
