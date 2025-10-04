@@ -64,6 +64,10 @@ func _on_resume_pressed() -> void:
 
 func _on_options_pressed() -> void:
 	var options_menu := OPTIONS_MENU.instantiate()
+
+	# Set process mode to work while paused
+	options_menu.process_mode = Node.PROCESS_MODE_ALWAYS
+
 	get_tree().root.add_child(options_menu)
 
 	# Hide pause menu while in options

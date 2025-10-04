@@ -35,6 +35,9 @@ func _ready() -> void:
 	players_node.name = "Players"
 	add_child(players_node)
 
+	# Connect to player disconnect signal
+	NetworkManager.player_disconnected.connect(_on_player_disconnected)
+
 	# Spawn players for multiplayer
 	if multiplayer.get_peers().size() > 0 or multiplayer.is_server():
 		_spawn_players()
@@ -115,3 +118,13 @@ func collect_fragment() -> void:
 	# Check win condition
 	if fragments_collected >= total_fragments:
 		_end_round()
+
+
+func _on_player_disconnected(player_id: int) -> void:
+	"""Remove player character when they disconnect."""
+	var player_node := players_node.get_node_or_null("Player_%d" % player_id)
+	if player_node:
+		print("LevelManager: Removing disconnected player %d" % player_id)
+		player_node.queue_free()
+	else:
+		print("LevelManager: Player %d node not found for cleanup" % player_id)
