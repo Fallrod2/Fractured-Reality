@@ -455,8 +455,8 @@ func _try_restore_session() -> void:
 	if config.load("user://session.cfg") != OK:
 		return
 
-	var saved_access := config.get_value("session", "access_token", "")
-	var saved_refresh := config.get_value("session", "refresh_token", "")
+	var saved_access: String = config.get_value("session", "access_token", "")
+	var saved_refresh: String = config.get_value("session", "refresh_token", "")
 
 	if saved_access.is_empty() or saved_refresh.is_empty():
 		return
