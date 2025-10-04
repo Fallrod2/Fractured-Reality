@@ -146,7 +146,9 @@ func _on_server_join_requested(server_data: Dictionary) -> void:
 
 func _on_back_pressed() -> void:
 	print("ServerBrowser: Back to main menu")
-	queue_free()
+
+	# Return to main menu
+	get_tree().change_scene_to_file("res://scenes/ui/main_menu.tscn")
 
 
 func _on_direct_connect_pressed() -> void:
