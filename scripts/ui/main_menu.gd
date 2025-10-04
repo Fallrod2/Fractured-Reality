@@ -1,10 +1,9 @@
 extends Control
 ## Main menu scene for Fractured Reality
-## Handles navigation to multiplayer lobby and settings
+## Handles navigation to online multiplayer (WAN only)
 
 @onready var background: ColorRect = $Background
-@onready var host_button: Button = $VBoxContainer/HostButton
-@onready var join_button: Button = $VBoxContainer/JoinButton
+@onready var play_button: Button = $VBoxContainer/PlayButton
 @onready var settings_button: Button = $VBoxContainer/SettingsButton
 @onready var quit_button: Button = $VBoxContainer/QuitButton
 
@@ -14,7 +13,7 @@ var glitch_shader: Shader = preload("res://assets/shaders/ui_glitch.gdshader")
 
 func _ready() -> void:
 	# Ensure buttons are properly initialized
-	if not host_button or not join_button or not settings_button or not quit_button:
+	if not play_button or not settings_button or not quit_button:
 		push_error("MainMenu: Failed to find required button nodes")
 		return
 
@@ -26,6 +25,13 @@ func _ready() -> void:
 
 	# Setup keyboard navigation
 	_setup_keyboard_navigation()
+
+	# Check if user is already logged in
+	if AccountManager.is_logged_in:
+		print("MainMenu: User already logged in - %s" % AccountManager.current_user.username)
+		# Auto-navigate to online lobby
+		await get_tree().create_timer(0.5).timeout  # Brief delay for visual feedback
+		get_tree().change_scene_to_file("res://scenes/ui/online_lobby.tscn")
 
 
 func _setup_glitch_background() -> void:
@@ -49,7 +55,7 @@ func _setup_glitch_background() -> void:
 
 func _setup_button_animations() -> void:
 	"""Setup hover and click animations for all buttons."""
-	var buttons := [host_button, join_button, settings_button, quit_button]
+	var buttons := [play_button, settings_button, quit_button]
 
 	for button in buttons:
 		if button:
@@ -62,19 +68,17 @@ func _setup_button_animations() -> void:
 func _setup_keyboard_navigation() -> void:
 	"""Setup keyboard/controller focus navigation."""
 	# Set initial focus
-	host_button.grab_focus()
+	play_button.grab_focus()
 
 	# Setup focus neighbors for vertical navigation
-	host_button.focus_neighbor_bottom = join_button.get_path()
-	join_button.focus_neighbor_top = host_button.get_path()
-	join_button.focus_neighbor_bottom = settings_button.get_path()
-	settings_button.focus_neighbor_top = join_button.get_path()
+	play_button.focus_neighbor_bottom = settings_button.get_path()
+	settings_button.focus_neighbor_top = play_button.get_path()
 	settings_button.focus_neighbor_bottom = quit_button.get_path()
 	quit_button.focus_neighbor_top = settings_button.get_path()
 
 	# Wrap around navigation
-	quit_button.focus_neighbor_bottom = host_button.get_path()
-	host_button.focus_neighbor_top = quit_button.get_path()
+	quit_button.focus_neighbor_bottom = play_button.get_path()
+	play_button.focus_neighbor_top = quit_button.get_path()
 
 
 func _on_button_hover(button: Button) -> void:
@@ -136,33 +140,17 @@ func _play_ui_sound(_sound_type: String) -> void:
 	pass
 
 
-func _on_host_button_pressed() -> void:
-	print("Host button pressed")
+func _on_play_button_pressed() -> void:
+	print("Play button pressed")
 	_play_ui_sound("click")
 
-	# Create server
-	var error := NetworkManager.create_server()
-	if error != OK:
-		push_error("Failed to create server")
-		return
-
-	# Navigate to lobby as host
-	var lobby_scene: PackedScene = load("res://scenes/ui/lobby.tscn")
-	var lobby: Control = lobby_scene.instantiate()
-	get_tree().root.add_child(lobby)
-	lobby.setup_as_host(NetworkManager.DEFAULT_PORT)
-	queue_free()
-
-
-func _on_join_button_pressed() -> void:
-	print("Join button pressed")
-	_play_ui_sound("click")
-
-	# Open server browser
-	var browser_scene: PackedScene = load("res://scenes/ui/server_browser.tscn")
-	var browser: Control = browser_scene.instantiate()
-	get_tree().root.add_child(browser)
-	queue_free()
+	# Check if user is logged in
+	if AccountManager.is_logged_in:
+		# User is logged in - go to online lobby
+		get_tree().change_scene_to_file("res://scenes/ui/online_lobby.tscn")
+	else:
+		# User not logged in - go to login screen
+		get_tree().change_scene_to_file("res://scenes/ui/account_login.tscn")
 
 
 func _on_settings_button_pressed() -> void:
@@ -173,14 +161,6 @@ func _on_settings_button_pressed() -> void:
 	var options_scene: PackedScene = load("res://scenes/ui/options_menu.tscn")
 	var options_menu: CanvasLayer = options_scene.instantiate()
 	get_tree().root.add_child(options_menu)
-
-
-func _on_online_play_button_pressed() -> void:
-	print("Online play button pressed")
-	_play_ui_sound("click")
-
-	# Navigate to account login
-	get_tree().change_scene_to_file("res://scenes/ui/account_login.tscn")
 
 
 func _on_quit_button_pressed() -> void:

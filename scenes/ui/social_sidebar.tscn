@@ -1,0 +1,105 @@
+[gd_scene load_steps=3 format=3 uid="uid://cks8h4j6m5wqt"]
+
+[ext_resource type="Theme" uid="uid://c6hc0fqc0hhfq" path="res://assets/ui/fractured_reality_theme.tres" id="1_theme"]
+[ext_resource type="Script" path="res://scripts/ui/social_sidebar.gd" id="2_script"]
+
+[node name="SocialSidebar" type="CanvasLayer"]
+process_mode = 3
+layer = 10
+script = ExtResource("2_script")
+
+[node name="ToggleButton" type="Button" parent="."]
+custom_minimum_size = Vector2(50, 50)
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 70.0
+offset_bottom = 70.0
+theme = ExtResource("1_theme")
+text = "☰"
+
+[node name="SidebarPanel" type="PanelContainer" parent="."]
+offset_left = -400.0
+offset_top = 0.0
+offset_right = 0.0
+offset_bottom = 1080.0
+theme = ExtResource("1_theme")
+
+[node name="MarginContainer" type="MarginContainer" parent="SidebarPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SidebarPanel/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="Header" type="HBoxContainer" parent="SidebarPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="SidebarPanel/MarginContainer/VBoxContainer/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 24
+theme_override_colors/font_color = Color(0, 1, 1, 1)
+text = "SOCIAL"
+
+[node name="CloseButton" type="Button" parent="SidebarPanel/MarginContainer/VBoxContainer/Header"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+text = "×"
+
+[node name="HSeparator" type="HSeparator" parent="SidebarPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="UserInfo" type="VBoxContainer" parent="SidebarPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 5
+
+[node name="UsernameLabel" type="Label" parent="SidebarPanel/MarginContainer/VBoxContainer/UserInfo"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+theme_override_colors/font_color = Color(0, 1, 1, 1)
+text = "Not logged in"
+
+[node name="StatusLabel" type="Label" parent="SidebarPanel/MarginContainer/VBoxContainer/UserInfo"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+theme_override_colors/font_color = Color(0.5, 0.5, 0.5, 1)
+text = "Offline"
+
+[node name="HSeparator2" type="HSeparator" parent="SidebarPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="FriendsHeader" type="Label" parent="SidebarPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+theme_override_colors/font_color = Color(0, 1, 1, 1)
+text = "FRIENDS"
+
+[node name="FriendsScroll" type="ScrollContainer" parent="SidebarPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="FriendsList" type="VBoxContainer" parent="SidebarPanel/MarginContainer/VBoxContainer/FriendsScroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 5
+
+[node name="NoFriendsLabel" type="Label" parent="SidebarPanel/MarginContainer/VBoxContainer/FriendsScroll/FriendsList"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.5, 0.5, 0.5, 1)
+text = "No friends yet"
+horizontal_alignment = 1
+
+[node name="HSeparator3" type="HSeparator" parent="SidebarPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="QuickActions" type="VBoxContainer" parent="SidebarPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="LogoutButton" type="Button" parent="SidebarPanel/MarginContainer/VBoxContainer/QuickActions"]
+layout_mode = 2
+text = "LOGOUT"

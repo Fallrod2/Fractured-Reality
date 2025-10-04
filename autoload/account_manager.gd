@@ -461,6 +461,80 @@ func _try_restore_session() -> void:
 	if saved_access.is_empty() or saved_refresh.is_empty():
 		return
 
-	# TODO: Implement token refresh and session validation
-	# For now, require manual login
-	print("AccountManager: Session restore not yet implemented")
+	print("AccountManager: Attempting to restore session...")
+
+	# Try to get user info with saved token
+	access_token = saved_access
+	refresh_token = saved_refresh
+
+	_validate_session()
+
+
+## Validate current session
+func _validate_session() -> void:
+	var http := HTTPRequest.new()
+	add_child(http)
+
+	var headers := [
+		"apikey: " + SUPABASE_ANON_KEY,
+		"Authorization: Bearer " + access_token,
+		"Content-Type: application/json"
+	]
+
+	var error := http.request(
+		SUPABASE_URL + "/auth/v1/user",
+		headers,
+		HTTPClient.METHOD_GET
+	)
+
+	if error != OK:
+		push_error("AccountManager: Failed to validate session")
+		http.queue_free()
+		return
+
+	var result = await http.request_completed
+	_handle_session_validation(result, http)
+
+
+func _handle_session_validation(result: Array, http: HTTPRequest) -> void:
+	var response_code = result[1]
+	var body = result[3]
+
+	http.queue_free()
+
+	if response_code == 200:
+		# Session is valid!
+		var json := JSON.new()
+		var parse_result := json.parse(body.get_string_from_utf8())
+
+		if parse_result != OK:
+			print("AccountManager: Session validation failed - invalid response")
+			return
+
+		var user_data: Dictionary = json.data
+		var user_metadata: Dictionary = user_data.get("user_metadata", {})
+
+		current_user = {
+			"id": user_data.get("id", ""),
+			"username": user_metadata.get("username", ""),
+			"email": user_data.get("email", "")
+		}
+
+		is_logged_in = true
+
+		# Set online status
+		_set_online_status(true)
+
+		print("AccountManager: Session restored successfully - %s" % current_user.username)
+
+		# Emit login success
+		login_succeeded.emit(current_user)
+
+		# Fetch friends list
+		refresh_friends()
+	else:
+		print("AccountManager: Session expired, clearing tokens")
+		# Clear invalid session
+		access_token = ""
+		refresh_token = ""
+		_save_session()
