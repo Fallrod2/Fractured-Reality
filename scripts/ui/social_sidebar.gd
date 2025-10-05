@@ -102,12 +102,12 @@ func _input(event: InputEvent) -> void:
 	# Toggle sidebar with F1 key
 	if event.is_action_pressed("ui_page_up"):  # F1 is mapped to ui_page_up by default in Godot
 		_on_toggle_pressed()
-		accept_event()
+		get_viewport().set_input_as_handled()
 
 	# Close sidebar with Escape if open
 	if event.is_action_pressed("ui_cancel") and is_open:
 		_on_close_pressed()
-		accept_event()
+		get_viewport().set_input_as_handled()
 
 
 func _on_toggle_pressed() -> void:
