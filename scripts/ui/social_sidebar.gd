@@ -199,19 +199,48 @@ func _create_friend_entry(friend: Dictionary) -> PanelContainer:
 	if friend.get("status", "") == "pending":
 		var request_type: String = friend.get("requestType", "")
 		if request_type == "received":
-			name_label.text += " (Pending)"
+			# Received friend request - show Accept/Reject buttons
 			name_label.add_theme_color_override("font_color", Color(1, 0.8, 0))  # Yellow - already good contrast
+			hbox.add_child(name_label)
+
+			# Accept button
+			var accept_btn := Button.new()
+			accept_btn.text = "✓"
+			accept_btn.custom_minimum_size = Vector2(30, 30)
+			accept_btn.tooltip_text = "Accept friend request"
+			accept_btn.pressed.connect(func(): _accept_friend_request(friend.id))
+			hbox.add_child(accept_btn)
+
+			# Reject button
+			var reject_btn := Button.new()
+			reject_btn.text = "✗"
+			reject_btn.custom_minimum_size = Vector2(30, 30)
+			reject_btn.tooltip_text = "Reject friend request"
+			reject_btn.pressed.connect(func(): _reject_friend_request(friend.id))
+			hbox.add_child(reject_btn)
 		else:
+			# Sent friend request - show pending
 			name_label.text += " (Sent)"
 			name_label.add_theme_color_override("font_color", Color(0.75, 0.75, 0.75))  # Lighter gray - 5.1:1 contrast (WCAG AA)
+			hbox.add_child(name_label)
 	elif friend.get("online", false):
 		name_label.add_theme_color_override("font_color", Color(0, 1, 1))  # Neon Cyan - already good contrast
+		hbox.add_child(name_label)
 	else:
 		name_label.add_theme_color_override("font_color", Color(0.75, 0.75, 0.75))  # Lighter gray - 5.1:1 contrast (WCAG AA)
-
-	hbox.add_child(name_label)
+		hbox.add_child(name_label)
 
 	return panel
+
+
+func _accept_friend_request(friend_id: String) -> void:
+	print("SocialSidebar: Accepting friend request from %s" % friend_id)
+	AccountManager.respond_friend_request(friend_id, true)
+
+
+func _reject_friend_request(friend_id: String) -> void:
+	print("SocialSidebar: Rejecting friend request from %s" % friend_id)
+	AccountManager.respond_friend_request(friend_id, false)
 
 
 func _on_logout_pressed() -> void:

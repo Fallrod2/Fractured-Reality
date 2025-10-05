@@ -355,6 +355,7 @@ func _send_friend_request(friend_id: String) -> void:
 
 
 ## Accept/reject friend request
+## friend_id is the user ID of the person who sent the request
 func respond_friend_request(friend_id: String, accept: bool) -> void:
 	if not is_logged_in:
 		return
@@ -371,6 +372,7 @@ func respond_friend_request(friend_id: String, accept: bool) -> void:
 
 	if accept:
 		# Update status to accepted
+		# The friend request row has: user_id = friend_id (sender), friend_id = current_user.id (receiver)
 		var body := JSON.stringify({
 			"status": "accepted"
 		})
@@ -386,6 +388,8 @@ func respond_friend_request(friend_id: String, accept: bool) -> void:
 			push_error("AccountManager: Failed to accept friend request")
 			http.queue_free()
 			return
+
+		print("AccountManager: Accepting friend request from %s" % friend_id)
 	else:
 		# Delete the friend request
 		var error := http.request(
@@ -399,8 +403,16 @@ func respond_friend_request(friend_id: String, accept: bool) -> void:
 			http.queue_free()
 			return
 
+		print("AccountManager: Rejecting friend request from %s" % friend_id)
+
 	var result = await http.request_completed
+	var response_code = result[1]
 	http.queue_free()
+
+	if response_code == 200 or response_code == 204:
+		print("AccountManager: Friend request %s successfully" % ("accepted" if accept else "rejected"))
+	else:
+		print("AccountManager: Failed to respond to friend request (code %d)" % response_code)
 
 	# Refresh friends list
 	refresh_friends()

@@ -13,16 +13,17 @@ Key goals:
 ## Visual Identity
 
 ### Color Palette
-The palette draws from cosmic voids and digital errors, creating contrast for readability while evoking unease and excitement. Use hex codes for implementation in Godot shaders and UI nodes.
+The palette draws from cosmic voids and digital errors, creating contrast for readability while evoking unease and excitement. The darker scheme enhances the glitch aesthetic and reduces eye strain during intense sessions. Use hex codes for implementation in Godot shaders and UI nodes.
 
-- **Primary: Deep Space Blue** (#001F3F) – Backgrounds, UI bases; represents infinite, fractured voids.
+- **Primary: Void Black** (#000000) – Main backgrounds, deep space void; represents the fractured digital abyss.
 - **Secondary: Neon Cyan** (#00FFFF) – Highlights, player indicators, ghost trails; symbolizes temporal energy and repair mechanics.
-- **Accent: Electric Purple** (#7F00FF) – Abilities, menus, progress bars; conveys corruption and mystery.
+- **Accent: Electric Purple** (#7F00FF) – Abilities, UI panels, progress bars; conveys corruption and mystery.
 - **Warning: Glitch Red** (#FF4136) – Critical alerts, Corruptor elements, time slowdowns; signals danger and urgency.
 - **Neutral: Digital Gray** (#AAAAAA) – Subtle text, borders; for low-contrast elements to avoid overload.
-- **Background Gradient**: Linear from Deep Space Blue to black (#000000) with subtle glitch noise overlays.
+- **Subtle Background Accent**: Very dark blue (#000510) – Optional subtle tint for panels/containers to add depth while maintaining darkness.
+- **Background Effects**: Pure black base with glitch noise overlays and subtle cyan/purple edge glows.
 
-Usage guidelines: Limit to 3-4 colors per screen. High contrast ratios (at least 4.5:1) for text over backgrounds. In multiplayer, Repairers use cooler tones (cyan/blue), while the Corruptor employs warmer accents (purple/red) for quick role identification.[3]
+Usage guidelines: Limit to 3-4 colors per screen. High contrast ratios (at least 4.5:1) for text over backgrounds. In multiplayer, Repairers use cooler tones (cyan/blue), while the Corruptor employs warmer accents (purple/red) for quick role identification. The pure black background maximizes contrast and creates a dramatic "floating in space" effect.[3]
 
 ### Typography
 - **Primary Font: Futura or Similar Geometric Sans-Serif** (e.g., Orbitron for a sci-fi feel) – Clean, modern lines to mimic digital code. Sizes: 24-48pt for headers, 14-18pt for body text.
@@ -66,12 +67,13 @@ Usage guidelines: Limit to 3-4 colors per screen. High contrast ratios (at least
 - Behavior: Scales with resolution; auto-hides on menu open. Use Godot CanvasLayer for layering.[4]
 
 ### Menus and Screens
-- **Main Menu**: Central glitch portal with floating menu options. Background: Animated space void with subtle distortions.
-  - Buttons: Vertical stack, hover effect (neon outline + glitch scanline).
-  - Sections: Play (Quick Match/Lobby), Profile (Stats/Unlocks), Settings.
-- **Lobby Screen**: Player list with avatars (glitch portraits). Ready button pulses cyan. Chat minimized to avoid distraction.
-- **End Screen**: Victory/Defeat with stats breakdown (e.g., "Fragments: 12/15"). Replay button prominent; glitch transition to menu.
-- **Settings**: Tabbed (Graphics, Audio, Controls); sliders with real-time previews (e.g., glitch intensity slider shows effect).
+- **Main Menu**: Central glitch portal with floating menu options. Background: Pure black void (#000000) with animated glitch shader effects and subtle cyan/purple particle overlays.
+  - Buttons: Vertical stack with semi-transparent purple backgrounds, hover effect (neon cyan outline + glitch scanline, 1.1x scale).
+  - Title: Large glitched text "FRACTURED REALITY" with electric purple glow and subtle horizontal distortion.
+  - Sections: Play (Primary action), Settings, Quit.
+- **Lobby Screen**: Pure black background with semi-transparent panels. Player list with avatars (glitch portraits). Ready button pulses cyan. Social sidebar accessible via top-left toggle.
+- **End Screen**: Victory/Defeat with stats breakdown (e.g., "Fragments: 12/15"). Replay button prominent; glitch transition to menu with reality fracture effect.
+- **Settings**: Pure black background with semi-transparent panels. Tabbed (Graphics, Audio, Controls); sliders with real-time previews (e.g., glitch intensity slider shows effect).
 
 ### Interactions and Animations
 - **Buttons**: Hover: Subtle glow + 10% scale. Click: Inward pulse + glitch ripple (0.2s).
