@@ -38,20 +38,23 @@ theme_override_constants/margin_bottom = 60
 layout_mode = 2
 theme_override_constants/separation = 20
 
-[node name="Header" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+[node name="Header" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_constants/separation = 10
 
 [node name="Title" type="Label" parent="MarginContainer/VBoxContainer/Header"]
 layout_mode = 2
-size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 32
-theme_override_colors/font_color = Color(0, 1, 1, 1)
+theme_override_font_sizes/font_size = 48
+theme_override_colors/font_color = Color(0.498039, 0, 1, 1)
 text = "ONLINE LOBBY"
+horizontal_alignment = 1
 
 [node name="UsernameLabel" type="Label" parent="MarginContainer/VBoxContainer/Header"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0, 1, 1, 1)
+theme_override_font_sizes/font_size = 16
+theme_override_colors/font_color = Color(0, 1, 1, 0.7)
 text = "Logged in as: Player"
+horizontal_alignment = 1
 
 [node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -68,8 +71,8 @@ theme_override_constants/separation = 10
 
 [node name="FriendsTitle" type="Label" parent="MarginContainer/VBoxContainer/ContentContainer/FriendsPanel"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 24
-theme_override_colors/font_color = Color(0, 1, 1, 1)
+theme_override_font_sizes/font_size = 28
+theme_override_colors/font_color = Color(0.498039, 0, 1, 1)
 text = "FRIENDS"
 
 [node name="AddFriendContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/ContentContainer/FriendsPanel"]
@@ -111,8 +114,9 @@ horizontal_alignment = 1
 layout_mode = 2
 
 [node name="HostButton" type="Button" parent="MarginContainer/VBoxContainer/ContentContainer/ActionsPanel"]
-custom_minimum_size = Vector2(300, 60)
+custom_minimum_size = Vector2(400, 80)
 layout_mode = 2
+theme_override_font_sizes/font_size = 28
 text = "HOST GAME"
 
 [node name="InfoLabel" type="Label" parent="MarginContainer/VBoxContainer/ContentContainer/ActionsPanel"]

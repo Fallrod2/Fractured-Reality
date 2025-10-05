@@ -3,9 +3,9 @@ extends Control
 ## Handles navigation to online multiplayer (WAN only)
 
 @onready var background: ColorRect = $Background
-@onready var play_button: Button = $VBoxContainer/PlayButton
-@onready var settings_button: Button = $VBoxContainer/SettingsButton
-@onready var quit_button: Button = $VBoxContainer/QuitButton
+@onready var play_button: Button = $CenterContainer/VBoxContainer/ButtonsContainer/PlayButton
+@onready var settings_button: Button = $CenterContainer/VBoxContainer/ButtonsContainer/SettingsButton
+@onready var quit_button: Button = $CenterContainer/VBoxContainer/ButtonsContainer/QuitButton
 
 # Glitch shader for background
 var glitch_shader: Shader = preload("res://assets/shaders/ui_glitch.gdshader")

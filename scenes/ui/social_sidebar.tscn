@@ -1,7 +1,24 @@
-[gd_scene load_steps=3 format=3 uid="uid://cks8h4j6m5wqt"]
+[gd_scene load_steps=5 format=3 uid="uid://cks8h4j6m5wqt"]
 
 [ext_resource type="Theme" uid="uid://c6hc0fqc0hhfq" path="res://assets/ui/fractured_reality_theme.tres" id="1_theme"]
 [ext_resource type="Script" path="res://scripts/ui/social_sidebar.gd" id="2_script"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sidebar_bg"]
+bg_color = Color(0.05, 0.05, 0.1, 0.95)
+border_width_right = 2
+border_color = Color(0, 1, 1, 0.5)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_friend_entry"]
+bg_color = Color(0.1, 0.1, 0.15, 0.5)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 1, 1, 0.3)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
 
 [node name="SocialSidebar" type="CanvasLayer"]
 process_mode = 3
@@ -23,6 +40,7 @@ offset_top = 0.0
 offset_right = 0.0
 offset_bottom = 1080.0
 theme = ExtResource("1_theme")
+theme_override_styles/panel = SubResource("StyleBoxFlat_sidebar_bg")
 
 [node name="MarginContainer" type="MarginContainer" parent="SidebarPanel"]
 layout_mode = 2
@@ -41,14 +59,15 @@ layout_mode = 2
 [node name="Title" type="Label" parent="SidebarPanel/MarginContainer/VBoxContainer/Header"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 24
-theme_override_colors/font_color = Color(0, 1, 1, 1)
+theme_override_font_sizes/font_size = 28
+theme_override_colors/font_color = Color(0.498039, 0, 1, 1)
 text = "SOCIAL"
 
 [node name="CloseButton" type="Button" parent="SidebarPanel/MarginContainer/VBoxContainer/Header"]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
-text = "×"
+theme_override_font_sizes/font_size = 24
+text = "✕"
 
 [node name="HSeparator" type="HSeparator" parent="SidebarPanel/MarginContainer/VBoxContainer"]
 layout_mode = 2

@@ -178,12 +178,32 @@ func _on_friends_updated(friends: Array) -> void:
 
 func _create_friend_entry(friend: Dictionary) -> PanelContainer:
 	var panel := PanelContainer.new()
+
+	# Create stylebox for panel
+	var style := StyleBoxFlat.new()
+	style.bg_color = Color(0.1, 0.1, 0.15, 0.5)
+	style.border_width_left = 1
+	style.border_width_top = 1
+	style.border_width_right = 1
+	style.border_width_bottom = 1
+	style.border_color = Color(0, 1, 1, 0.3)
+	style.corner_radius_top_left = 4
+	style.corner_radius_top_right = 4
+	style.corner_radius_bottom_right = 4
+	style.corner_radius_bottom_left = 4
+	style.content_margin_left = 10
+	style.content_margin_top = 8
+	style.content_margin_right = 10
+	style.content_margin_bottom = 8
+	panel.add_theme_stylebox_override("panel", style)
+
 	var hbox := HBoxContainer.new()
+	hbox.add_theme_constant_override("separation", 10)
 	panel.add_child(hbox)
 
 	# Online status indicator
 	var status_indicator := ColorRect.new()
-	status_indicator.custom_minimum_size = Vector2(12, 12)
+	status_indicator.custom_minimum_size = Vector2(16, 16)
 	if friend.get("online", false):
 		status_indicator.color = Color(0, 1, 0)  # Green for online
 	else:
