@@ -1,8 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://bqxj8n4h5k2pm"]
+[gd_scene load_steps=3 format=3 uid="uid://bqxj8n4h5k2pm"]
 
 [ext_resource type="Theme" uid="uid://c6hc0fqc0hhfq" path="res://assets/ui/fractured_reality_theme.tres" id="1_theme"]
 [ext_resource type="Script" path="res://scripts/ui/online_lobby.gd" id="2_script"]
-[ext_resource type="PackedScene" uid="uid://cks8h4j6m5wqt" path="res://scenes/ui/social_sidebar.tscn" id="3_sidebar"]
 
 [node name="OnlineLobby" type="Control"]
 layout_mode = 3
@@ -149,5 +148,3 @@ text = "LOGOUT"
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
 text = "BACK TO MENU"
-
-[node name="SocialSidebar" parent="." instance=ExtResource("3_sidebar")]

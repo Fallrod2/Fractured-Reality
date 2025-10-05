@@ -17,6 +17,11 @@ func _ready() -> void:
 		push_error("MainMenu: Failed to find required button nodes")
 		return
 
+	# Add social sidebar to scene tree root
+	var sidebar_scene: PackedScene = preload("res://scenes/ui/social_sidebar.tscn")
+	var sidebar: CanvasLayer = sidebar_scene.instantiate()
+	get_tree().root.add_child(sidebar)
+
 	# Apply glitch shader to background
 	_setup_glitch_background()
 

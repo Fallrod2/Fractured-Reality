@@ -19,6 +19,11 @@ func _ready() -> void:
 		get_tree().change_scene_to_file("res://scenes/ui/main_menu.tscn")
 		return
 
+	# Add social sidebar to scene tree root
+	var sidebar_scene: PackedScene = preload("res://scenes/ui/social_sidebar.tscn")
+	var sidebar: CanvasLayer = sidebar_scene.instantiate()
+	get_tree().root.add_child(sidebar)
+
 	# Update UI with username
 	username_label.text = "Logged in as: " + AccountManager.current_user.username
 
