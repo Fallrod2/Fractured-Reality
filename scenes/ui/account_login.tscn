@@ -1,13 +1,40 @@
-[gd_scene load_steps=3 format=3 uid="uid://c2vw8y3m1xh5p"]
+[gd_scene load_steps=7 format=3 uid="uid://c2vw8y3m1xh5p"]
 
-[ext_resource type="Theme" uid="uid://c6hc0fqc0hhfq" path="res://assets/ui/fractured_reality_theme.tres" id="1_theme"]
+[ext_resource type="Theme" uid="uid://c7s8qm3h5xwvb" path="res://assets/ui/fractured_reality_theme.tres" id="1_theme"]
 [ext_resource type="Script" path="res://scripts/ui/account_login.gd" id="2_script"]
+[ext_resource type="FontFile" uid="uid://dqfmg2b8nh5d8" path="res://assets/fonts/Orbitron-Bold.ttf" id="3_font_bold"]
+[ext_resource type="Shader" path="res://assets/shaders/ui_glitch.gdshader" id="4_shader"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bg"]
+shader = ExtResource("4_shader")
+shader_parameter/glitch_strength = 0.02
+shader_parameter/scan_line_speed = 0.4
+shader_parameter/scan_line_density = 800.0
+shader_parameter/noise_amount = 0.01
+shader_parameter/horizontal_shake = 0.005
+shader_parameter/glitch_color = Color(0, 1, 1, 0.2)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
+bg_color = Color(0.003922, 0.019608, 0.062745, 0.95)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.498039, 0, 1, 0.7)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+shadow_color = Color(0.498039, 0, 1, 0.3)
+shadow_size = 15
+shadow_offset = Vector2(0, 0)
 
 [node name="AccountLogin" type="CanvasLayer"]
 process_mode = 3
 script = ExtResource("2_script")
 
 [node name="ColorRect" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_bg")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -23,72 +50,115 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Panel" type="PanelContainer" parent="CenterContainer"]
-custom_minimum_size = Vector2(500, 400)
+custom_minimum_size = Vector2(550, 500)
 layout_mode = 2
+theme = ExtResource("1_theme")
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
 
 [node name="MarginContainer" type="MarginContainer" parent="CenterContainer/Panel"]
 layout_mode = 2
-theme_override_constants/margin_left = 40
-theme_override_constants/margin_top = 40
-theme_override_constants/margin_right = 40
-theme_override_constants/margin_bottom = 40
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 45
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 45
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/Panel/MarginContainer"]
 layout_mode = 2
-theme_override_constants/separation = 20
+theme_override_constants/separation = 25
 
-[node name="Title" type="Label" parent="CenterContainer/Panel/MarginContainer/VBoxContainer"]
+[node name="TitleSection" type="VBoxContainer" parent="CenterContainer/Panel/MarginContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 36
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="CenterContainer/Panel/MarginContainer/VBoxContainer/TitleSection"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_font_bold")
+theme_override_font_sizes/font_size = 42
 theme_override_colors/font_color = Color(0.498039, 0, 1, 1)
 text = "ACCOUNT LOGIN"
 horizontal_alignment = 1
 
-[node name="ModeLabel" type="Label" parent="CenterContainer/Panel/MarginContainer/VBoxContainer"]
+[node name="ModeLabel" type="Label" parent="CenterContainer/Panel/MarginContainer/VBoxContainer/TitleSection"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 14
-theme_override_colors/font_color = Color(0, 1, 1, 0.7)
+theme_override_font_sizes/font_size = 16
+theme_override_colors/font_color = Color(0, 1, 1, 1)
 text = "Login to your account"
 horizontal_alignment = 1
 
 [node name="HSeparator" type="HSeparator" parent="CenterContainer/Panel/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="UsernameLabel" type="Label" parent="CenterContainer/Panel/MarginContainer/VBoxContainer"]
+[node name="FormSection" type="VBoxContainer" parent="CenterContainer/Panel/MarginContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_constants/separation = 18
+
+[node name="UsernameContainer" type="VBoxContainer" parent="CenterContainer/Panel/MarginContainer/VBoxContainer/FormSection"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="UsernameLabel" type="Label" parent="CenterContainer/Panel/MarginContainer/VBoxContainer/FormSection/UsernameContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+theme_override_colors/font_color = Color(0, 1, 1, 1)
 text = "Username:"
 
-[node name="UsernameInput" type="LineEdit" parent="CenterContainer/Panel/MarginContainer/VBoxContainer"]
+[node name="UsernameInput" type="LineEdit" parent="CenterContainer/Panel/MarginContainer/VBoxContainer/FormSection/UsernameContainer"]
+custom_minimum_size = Vector2(0, 48)
 layout_mode = 2
+focus_mode = 2
+theme_override_font_sizes/font_size = 16
 placeholder_text = "Enter username..."
 max_length = 20
 
-[node name="PasswordLabel" type="Label" parent="CenterContainer/Panel/MarginContainer/VBoxContainer"]
+[node name="PasswordContainer" type="VBoxContainer" parent="CenterContainer/Panel/MarginContainer/VBoxContainer/FormSection"]
 layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="PasswordLabel" type="Label" parent="CenterContainer/Panel/MarginContainer/VBoxContainer/FormSection/PasswordContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+theme_override_colors/font_color = Color(0, 1, 1, 1)
 text = "Password:"
 
-[node name="PasswordInput" type="LineEdit" parent="CenterContainer/Panel/MarginContainer/VBoxContainer"]
+[node name="PasswordInput" type="LineEdit" parent="CenterContainer/Panel/MarginContainer/VBoxContainer/FormSection/PasswordContainer"]
+custom_minimum_size = Vector2(0, 48)
 layout_mode = 2
+focus_mode = 2
+theme_override_font_sizes/font_size = 16
 placeholder_text = "Enter password..."
 secret = true
 
-[node name="ErrorLabel" type="Label" parent="CenterContainer/Panel/MarginContainer/VBoxContainer"]
+[node name="ErrorLabel" type="Label" parent="CenterContainer/Panel/MarginContainer/VBoxContainer/FormSection"]
 layout_mode = 2
-theme_override_colors/font_color = Color(1, 0.2, 0.2, 1)
+theme_override_colors/font_color = Color(1, 0.255, 0.212, 1)
+theme_override_font_sizes/font_size = 14
 horizontal_alignment = 1
+autowrap_mode = 2
 
 [node name="HSeparator2" type="HSeparator" parent="CenterContainer/Panel/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="ActionButton" type="Button" parent="CenterContainer/Panel/MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 50)
+[node name="ActionsSection" type="VBoxContainer" parent="CenterContainer/Panel/MarginContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="ActionButton" type="Button" parent="CenterContainer/Panel/MarginContainer/VBoxContainer/ActionsSection"]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+focus_mode = 2
+theme_override_font_sizes/font_size = 22
 text = "LOGIN"
 
-[node name="ToggleModeButton" type="Button" parent="CenterContainer/Panel/MarginContainer/VBoxContainer"]
+[node name="ToggleModeButton" type="Button" parent="CenterContainer/Panel/MarginContainer/VBoxContainer/ActionsSection"]
+custom_minimum_size = Vector2(0, 45)
 layout_mode = 2
+focus_mode = 2
+theme_override_font_sizes/font_size = 14
 text = "Don't have an account? Register"
 
-[node name="BackButton" type="Button" parent="CenterContainer/Panel/MarginContainer/VBoxContainer"]
+[node name="BackButton" type="Button" parent="CenterContainer/Panel/MarginContainer/VBoxContainer/ActionsSection"]
+custom_minimum_size = Vector2(0, 45)
 layout_mode = 2
+focus_mode = 2
+theme_override_font_sizes/font_size = 16
 text = "BACK TO MENU"

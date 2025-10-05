@@ -1,6 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://c6p3wqvx5g0l1"]
+[gd_scene load_steps=8 format=3 uid="uid://c6p3wqvx5g0l1"]
 
-[ext_resource type="Theme" uid="uid://c6hc0fqc0hhfq" path="res://assets/ui/fractured_reality_theme.tres" id="1_theme"]
+[ext_resource type="Theme" uid="uid://c7s8qm3h5xwvb" path="res://assets/ui/fractured_reality_theme.tres" id="1_theme"]
 [ext_resource type="Script" path="res://scripts/ui/pause_menu.gd" id="2_script"]
 [ext_resource type="Shader" path="res://assets/shaders/ui_glitch.gdshader" id="3_shader"]
 [ext_resource type="FontFile" uid="uid://dqfmg2b8nh5d8" path="res://assets/fonts/Orbitron-Bold.ttf" id="4_font_bold"]
@@ -13,6 +13,24 @@ shader_parameter/scan_line_density = 800.0
 shader_parameter/noise_amount = 0.02
 shader_parameter/horizontal_shake = 0.01
 shader_parameter/glitch_color = Color(0, 1, 1, 0.3)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
+bg_color = Color(0.003922, 0.019608, 0.062745, 0.98)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.498039, 0, 1, 0.8)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+shadow_color = Color(0.498039, 0, 1, 0.4)
+shadow_size = 20
+shadow_offset = Vector2(0, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_blur_bg"]
+bg_color = Color(0, 0, 0, 0.7)
 
 [node name="PauseMenu" type="Control"]
 process_mode = 3
@@ -32,57 +50,89 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0, 0, 0, 0.5)
+theme_override_styles/panel = SubResource("StyleBoxFlat_blur_bg")
+color = Color(0, 0, 0, 0.7)
 
-[node name="Panel" type="PanelContainer" parent="."]
-material = SubResource("ShaderMaterial_pause")
+[node name="CenterContainer" type="CenterContainer" parent="."]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -300.0
-offset_top = -250.0
-offset_right = 300.0
-offset_bottom = 250.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="Panel"]
+[node name="Panel" type="PanelContainer" parent="CenterContainer"]
+material = SubResource("ShaderMaterial_pause")
+custom_minimum_size = Vector2(600, 550)
 layout_mode = 2
-theme_override_constants/margin_left = 40
-theme_override_constants/margin_top = 40
-theme_override_constants/margin_right = 40
-theme_override_constants/margin_bottom = 40
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel/MarginContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/Panel"]
 layout_mode = 2
-theme_override_constants/separation = 30
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
 
-[node name="Title" type="Label" parent="Panel/MarginContainer/VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/Panel/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 40
+
+[node name="Title" type="Label" parent="CenterContainer/Panel/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("4_font_bold")
-theme_override_font_sizes/font_size = 48
+theme_override_font_sizes/font_size = 56
 theme_override_colors/font_color = Color(0.498039, 0, 1, 1)
 text = "PAUSED"
 horizontal_alignment = 1
 
-[node name="Spacer" type="Control" parent="Panel/MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 20)
+[node name="Subtitle" type="Label" parent="CenterContainer/Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+theme_override_colors/font_color = Color(0, 1, 1, 0.8)
+text = "Game is paused - Time has stopped"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="CenterContainer/Panel/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="ResumeButton" type="Button" parent="Panel/MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 60)
+[node name="ButtonsContainer" type="VBoxContainer" parent="CenterContainer/Panel/MarginContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_constants/separation = 18
+
+[node name="ResumeButton" type="Button" parent="CenterContainer/Panel/MarginContainer/VBoxContainer/ButtonsContainer"]
+custom_minimum_size = Vector2(0, 70)
+layout_mode = 2
+focus_neighbor_top = NodePath("../QuitButton")
+focus_neighbor_bottom = NodePath("../OptionsButton")
+focus_mode = 2
+theme_override_font_sizes/font_size = 26
 text = "RESUME"
 
-[node name="OptionsButton" type="Button" parent="Panel/MarginContainer/VBoxContainer"]
+[node name="OptionsButton" type="Button" parent="CenterContainer/Panel/MarginContainer/VBoxContainer/ButtonsContainer"]
 custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
+focus_neighbor_top = NodePath("../ResumeButton")
+focus_neighbor_bottom = NodePath("../QuitButton")
+focus_mode = 2
+theme_override_font_sizes/font_size = 20
 text = "OPTIONS"
 
-[node name="QuitButton" type="Button" parent="Panel/MarginContainer/VBoxContainer"]
+[node name="QuitButton" type="Button" parent="CenterContainer/Panel/MarginContainer/VBoxContainer/ButtonsContainer"]
 custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
+focus_neighbor_top = NodePath("../OptionsButton")
+focus_neighbor_bottom = NodePath("../ResumeButton")
+focus_mode = 2
+theme_override_font_sizes/font_size = 20
 text = "QUIT TO MENU"
+
+[node name="HSeparator2" type="HSeparator" parent="CenterContainer/Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="InfoLabel" type="Label" parent="CenterContainer/Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+theme_override_colors/font_color = Color(0.6, 0.6, 0.6, 1)
+text = "Press ESC to resume"
+horizontal_alignment = 1

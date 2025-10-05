@@ -198,38 +198,71 @@ Claude has access to MCP (Model Context Protocol) tools for Godot automation. Us
 - Use manual CLI commands (`godot --path .`) for interactive debugging
 - MCP tools are headless - use `launch_editor` when GUI needed
 
-### UI/UX Review Agent
-Claude has access to a specialized `uiux-reviewer` agent that automatically reviews UI/UX implementations against the project's UIUX.md standards.
+### UI/UX Development Agent - MANDATORY WORKFLOW ⚠️
 
-**When to Use:**
-- ✅ ALWAYS use after implementing or modifying any UI elements (menus, HUD, dialogs)
-- ✅ After creating new scenes with UI components (buttons, labels, panels)
-- ✅ When adding visual feedback systems (ability indicators, progress bars, notifications)
-- ✅ After implementing player controls or interaction systems
-- ✅ When creating ghost trails, glitch effects, or temporal visual feedback
+**CRITICAL: All UI/UX work MUST be developed by the `uiux-reviewer` agent.**
 
-**What It Reviews:**
-- Color palette compliance (Deep Space Blue, Neon Cyan, Electric Purple, Glitch Red)
-- Typography usage (Futura/Orbitron for headers, monospace for HUD)
-- Component consistency (button styles, hover effects, animations)
-- Accessibility standards (contrast ratios, text sizes, color-blind support)
-- Diegetic integration (UI feels part of game world, not floating)
-- Glitch aesthetic application (subtle distortions, temporal effects)
+Claude has access to a specialized `uiux-reviewer` agent that **directly designs, implements, and validates** all UI/UX work according to UIUX.md standards. This agent has full development authority for anything visual or interactive.
 
-**Usage Pattern:**
-After completing UI work, the agent should be invoked automatically. It will:
-1. Analyze scene files and scripts for UI/UX elements
-2. Compare against UIUX.md guidelines
-3. Provide actionable feedback and improvement suggestions
-4. Identify accessibility or consistency issues
+**MANDATORY Usage - The Agent MUST Develop:**
+- ✅ **ALL UI scenes** - Menus, HUD, dialogs, overlays, pause screens
+- ✅ **ALL UI components** - Buttons, panels, labels, inputs, sliders, tabs
+- ✅ **ALL visual feedback** - Ability indicators, progress bars, notifications, status displays
+- ✅ **ALL UI scripts** - Menu logic, interaction handlers, animation controllers
+- ✅ **ALL theme resources** - StyleBox, fonts, colors, icons
+- ✅ **ALL shaders for UI** - Glitch effects, transitions, visual distortions
+- ✅ **ALL accessibility features** - Keyboard navigation, focus indicators, color-blind modes
+- ✅ **ANY UI fixes or refinements** - Layout adjustments, color corrections, contrast fixes
 
-**Example:**
+**How It Works:**
+The agent doesn't just review - it **actively develops** UI/UX features:
+1. **Designs** the UI according to UIUX.md standards
+2. **Implements** scenes, scripts, and resources directly
+3. **Validates** against accessibility and consistency guidelines
+4. **Self-reviews** and iterates until perfect
+5. **Delivers** production-ready, WCAG AA compliant UI
+
+**What The Agent Ensures:**
+- ✅ Color palette compliance (Void Black #000000, Electric Purple #7F00FF, Neon Cyan #00FFFF, Glitch Red #FF4136)
+- ✅ Typography hierarchy (48pt/28pt/16pt with Orbitron fonts)
+- ✅ WCAG AA accessibility (4.5:1 contrast ratios minimum)
+- ✅ Keyboard navigation with visible focus states
+- ✅ Glitch aesthetic integration (shaders, animations, distortions)
+- ✅ Component consistency across all scenes
+- ✅ Responsive design and proper layouts
+- ✅ Network status displays for multiplayer
+- ✅ Diegetic UI integration (feels part of game world)
+
+**Workflow Pattern:**
+Whenever UI/UX work is needed, immediately delegate to the agent:
+
 ```
-user: "I've created the lobby scene with player avatars"
-assistant: [implements lobby UI]
-assistant: [launches uiux-reviewer agent to validate against UIUX.md]
-assistant: [shares feedback from agent and makes recommended improvements]
+user: "Create a settings menu with graphics and audio options"
+assistant: [Launches uiux-reviewer agent to develop the feature]
+
+user: "The button colors don't match the theme"
+assistant: [Launches uiux-reviewer agent to fix and ensure UIUX.md compliance]
+
+user: "Add a friend request notification system"
+assistant: [Launches uiux-reviewer agent to design and implement the UI]
 ```
+
+**DO NOT:**
+- ❌ Implement UI/UX without the agent
+- ❌ Make visual changes without UIUX.md validation
+- ❌ Create scenes/components that bypass agent review
+- ❌ Use colors, fonts, or layouts not approved by UIUX.md
+
+**ALWAYS:**
+- ✅ Let the uiux-reviewer agent develop ALL UI/UX features
+- ✅ Trust the agent's implementation decisions
+- ✅ Use the agent for even small UI tweaks
+- ✅ Allow the agent to maintain visual consistency
+
+**Reference Documents:**
+- `/home/ubuntu/Fractured-Reality/UIUX.md` - Complete UI/UX design standards (the agent's bible)
+- `/home/ubuntu/Fractured-Reality/assets/ui/fractured_reality_theme.tres` - Global theme resource
+- `/home/ubuntu/Fractured-Reality/assets/shaders/` - UI shader library
 
 ## Development Workflow
 

@@ -1,8 +1,30 @@
-[gd_scene load_steps=4 format=3 uid="uid://c4qx8yvjw2dxf"]
+[gd_scene load_steps=9 format=3 uid="uid://c4qx8yvjw2dxf"]
 
 [ext_resource type="Script" path="res://scripts/ui/main_menu.gd" id="1_main_menu"]
 [ext_resource type="Theme" uid="uid://c7s8qm3h5xwvb" path="res://assets/ui/fractured_reality_theme.tres" id="2_theme"]
 [ext_resource type="FontFile" uid="uid://dqfmg2b8nh5d8" path="res://assets/fonts/Orbitron-Bold.ttf" id="3_font_bold"]
+[ext_resource type="Shader" path="res://assets/shaders/title_glitch.gdshader" id="4_title_shader"]
+[ext_resource type="Shader" path="res://assets/shaders/ui_glitch.gdshader" id="5_bg_shader"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_title"]
+shader = ExtResource("4_title_shader")
+shader_parameter/distortion_strength = 0.015
+shader_parameter/glitch_frequency = 2.0
+shader_parameter/glow_color = Color(0.498039, 0, 1, 0.8)
+shader_parameter/glow_intensity = 1.2
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_background"]
+shader = ExtResource("5_bg_shader")
+shader_parameter/glitch_strength = 0.02
+shader_parameter/scan_line_speed = 0.5
+shader_parameter/scan_line_density = 800.0
+shader_parameter/noise_amount = 0.01
+shader_parameter/horizontal_shake = 0.005
+shader_parameter/glitch_color = Color(0, 1, 1, 0.2)
+
+[sub_resource type="Gradient" id="Gradient_vignette"]
+offsets = PackedFloat32Array(0, 0.5, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1)
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -13,8 +35,10 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("2_theme")
 script = ExtResource("1_main_menu")
+metadata/_edit_lock_ = true
 
 [node name="Background" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_background")
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -22,6 +46,10 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
+metadata/_edit_lock_ = true
+
+[node name="ParticleLayer" type="CanvasLayer" parent="."]
+layer = -1
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
 layout_mode = 1
@@ -33,15 +61,16 @@ grow_vertical = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
 layout_mode = 2
-theme_override_constants/separation = 25
+theme_override_constants/separation = 30
 alignment = 1
 
 [node name="TitleContainer" type="VBoxContainer" parent="CenterContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_constants/separation = 10
+theme_override_constants/separation = 15
 alignment = 1
 
 [node name="Title" type="Label" parent="CenterContainer/VBoxContainer/TitleContainer"]
+material = SubResource("ShaderMaterial_title")
 layout_mode = 2
 theme_override_colors/font_color = Color(0.498039, 0, 1, 1)
 theme_override_fonts/font = ExtResource("3_font_bold")
@@ -51,53 +80,84 @@ horizontal_alignment = 1
 
 [node name="Subtitle" type="Label" parent="CenterContainer/VBoxContainer/TitleContainer"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0, 1, 1, 0.7)
-theme_override_font_sizes/font_size = 16
+theme_override_colors/font_color = Color(0, 1, 1, 1)
+theme_override_font_sizes/font_size = 18
 text = "4 Repairers vs 1 Corruptor"
 horizontal_alignment = 1
 
 [node name="Spacer" type="Control" parent="CenterContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 60)
+custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
 
 [node name="ButtonsContainer" type="VBoxContainer" parent="CenterContainer/VBoxContainer"]
-custom_minimum_size = Vector2(400, 0)
+custom_minimum_size = Vector2(450, 0)
 layout_mode = 2
-theme_override_constants/separation = 15
+theme_override_constants/separation = 18
+alignment = 1
 
 [node name="PlayButton" type="Button" parent="CenterContainer/VBoxContainer/ButtonsContainer"]
-custom_minimum_size = Vector2(0, 60)
+custom_minimum_size = Vector2(0, 70)
 layout_mode = 2
-theme_override_font_sizes/font_size = 24
+focus_neighbor_top = NodePath("../QuitButton")
+focus_neighbor_bottom = NodePath("../SettingsButton")
+focus_mode = 2
+theme_override_font_sizes/font_size = 28
 text = "PLAY"
 
 [node name="SettingsButton" type="Button" parent="CenterContainer/VBoxContainer/ButtonsContainer"]
-custom_minimum_size = Vector2(0, 50)
+custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
+focus_neighbor_top = NodePath("../PlayButton")
+focus_neighbor_bottom = NodePath("../QuitButton")
+focus_mode = 2
+theme_override_font_sizes/font_size = 20
 text = "SETTINGS"
 
 [node name="QuitButton" type="Button" parent="CenterContainer/VBoxContainer/ButtonsContainer"]
-custom_minimum_size = Vector2(0, 50)
+custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
+focus_neighbor_top = NodePath("../SettingsButton")
+focus_neighbor_bottom = NodePath("../PlayButton")
+focus_mode = 2
+theme_override_font_sizes/font_size = 20
 text = "QUIT"
 
-[node name="Version" type="Label" parent="."]
+[node name="BottomInfo" type="MarginContainer" parent="."]
 layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
+anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -120.0
-offset_top = -40.0
-offset_right = -20.0
-offset_bottom = -20.0
-grow_horizontal = 0
+offset_top = -60.0
+grow_horizontal = 2
 grow_vertical = 0
-theme_override_colors/font_color = Color(0.666667, 0.666667, 0.666667, 0.5)
-theme_override_font_sizes/font_size = 12
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 20
+
+[node name="HBoxContainer" type="HBoxContainer" parent="BottomInfo"]
+layout_mode = 2
+
+[node name="Version" type="Label" parent="BottomInfo/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_colors/font_color = Color(0.666667, 0.666667, 0.666667, 0.7)
+theme_override_font_sizes/font_size = 14
 text = "v0.1.0-alpha"
+vertical_alignment = 2
+
+[node name="Spacer" type="Control" parent="BottomInfo/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="NetworkStatus" type="Label" parent="BottomInfo/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_colors/font_color = Color(0, 1, 1, 0.8)
+theme_override_font_sizes/font_size = 14
+text = "Offline"
 horizontal_alignment = 2
+vertical_alignment = 2
 
 [connection signal="pressed" from="CenterContainer/VBoxContainer/ButtonsContainer/PlayButton" to="." method="_on_play_button_pressed"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/ButtonsContainer/SettingsButton" to="." method="_on_settings_button_pressed"]

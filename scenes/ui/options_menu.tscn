@@ -1,8 +1,28 @@
-[gd_scene load_steps=3 format=3 uid="uid://csj8wvxh3o7a1"]
+[gd_scene load_steps=7 format=3 uid="uid://csj8wvxh3o7a1"]
 
-[ext_resource type="Theme" uid="uid://c6hc0fqc0hhfq" path="res://assets/ui/fractured_reality_theme.tres" id="1_theme"]
+[ext_resource type="Theme" uid="uid://c7s8qm3h5xwvb" path="res://assets/ui/fractured_reality_theme.tres" id="1_theme"]
 [ext_resource type="Script" path="res://scripts/ui/options_menu.gd" id="2_script"]
 [ext_resource type="FontFile" uid="uid://dqfmg2b8nh5d8" path="res://assets/fonts/Orbitron-Bold.ttf" id="3_font_bold"]
+[ext_resource type="Shader" path="res://assets/shaders/ui_glitch.gdshader" id="4_shader"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bg"]
+shader = ExtResource("4_shader")
+shader_parameter/glitch_strength = 0.015
+shader_parameter/scan_line_speed = 0.3
+shader_parameter/scan_line_density = 800.0
+shader_parameter/noise_amount = 0.008
+shader_parameter/horizontal_shake = 0.003
+shader_parameter/glitch_color = Color(0, 1, 1, 0.15)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tab_panel"]
+bg_color = Color(0.003922, 0.019608, 0.062745, 0.8)
+border_width_left = 2
+border_width_top = 0
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 1, 1, 0.5)
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
 
 [node name="OptionsMenu" type="CanvasLayer"]
 process_mode = 3
@@ -18,6 +38,7 @@ theme = ExtResource("1_theme")
 script = ExtResource("2_script")
 
 [node name="ColorRect" type="ColorRect" parent="Control"]
+material = SubResource("ShaderMaterial_bg")
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -38,234 +59,340 @@ theme_override_constants/margin_top = 80
 theme_override_constants/margin_right = 100
 theme_override_constants/margin_bottom = 80
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/MarginContainer"]
 layout_mode = 2
-theme_override_constants/separation = 30
+theme_override_constants/separation = 35
 
-[node name="Title" type="Label" parent="MarginContainer/VBoxContainer"]
+[node name="Title" type="Label" parent="Control/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("3_font_bold")
-theme_override_font_sizes/font_size = 42
+theme_override_font_sizes/font_size = 48
 theme_override_colors/font_color = Color(0.498039, 0, 1, 1)
 text = "SETTINGS"
 horizontal_alignment = 1
 
-[node name="Content" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
+[node name="Content" type="VBoxContainer" parent="Control/MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_constants/separation = 20
 
-[node name="TabContainer" type="TabContainer" parent="MarginContainer/VBoxContainer/Content"]
+[node name="TabContainer" type="TabContainer" parent="Control/MarginContainer/VBoxContainer/Content"]
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_tab_panel")
 
-[node name="Graphics" type="ScrollContainer" parent="MarginContainer/VBoxContainer/Content/TabContainer"]
+[node name="Graphics" type="ScrollContainer" parent="Control/MarginContainer/VBoxContainer/Content/TabContainer"]
 layout_mode = 2
+horizontal_scroll_mode = 0
+metadata/_tab_name = "Graphics"
 
-[node name="Settings" type="VBoxContainer" parent="MarginContainer/VBoxContainer/Content/TabContainer/Graphics"]
+[node name="Settings" type="VBoxContainer" parent="Control/MarginContainer/VBoxContainer/Content/TabContainer/Graphics"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_constants/separation = 15
+theme_override_constants/separation = 20
 
-[node name="ResolutionLabel" type="Label" parent="MarginContainer/VBoxContainer/Content/TabContainer/Graphics/Settings"]
+[node name="ResolutionLabel" type="Label" parent="Control/MarginContainer/VBoxContainer/Content/TabContainer/Graphics/Settings"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 18
+theme_override_colors/font_color = Color(0, 1, 1, 1)
 text = "Resolution"
 
-[node name="ResolutionOption" type="OptionButton" parent="MarginContainer/VBoxContainer/Content/TabContainer/Graphics/Settings"]
+[node name="ResolutionOption" type="OptionButton" parent="Control/MarginContainer/VBoxContainer/Content/TabContainer/Graphics/Settings"]
+custom_minimum_size = Vector2(0, 45)
 layout_mode = 2
+focus_mode = 2
 
-[node name="WindowModeLabel" type="Label" parent="MarginContainer/VBoxContainer/Content/TabContainer/Graphics/Settings"]
+[node name="WindowModeLabel" type="Label" parent="Control/MarginContainer/VBoxContainer/Content/TabContainer/Graphics/Settings"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 18
+theme_override_colors/font_color = Color(0, 1, 1, 1)
 text = "Window Mode"
 
-[node name="WindowModeOption" type="OptionButton" parent="MarginContainer/VBoxContainer/Content/TabContainer/Graphics/Settings"]
+[node name="WindowModeOption" type="OptionButton" parent="Control/MarginContainer/VBoxContainer/Content/TabContainer/Graphics/Settings"]
+custom_minimum_size = Vector2(0, 45)
 layout_mode = 2
+focus_mode = 2
 
-[node name="VsyncCheck" type="CheckButton" parent="MarginContainer/VBoxContainer/Content/TabContainer/Graphics/Settings"]
+[node name="VsyncCheck" type="CheckButton" parent="Control/MarginContainer/VBoxContainer/Content/TabContainer/Graphics/Settings"]
+custom_minimum_size = Vector2(0, 45)
 layout_mode = 2
+focus_mode = 2
+theme_override_font_sizes/font_size = 18
 text = "VSync"
 
-[node name="QualityLabel" type="Label" parent="MarginContainer/VBoxContainer/Content/TabContainer/Graphics/Settings"]
+[node name="QualityLabel" type="Label" parent="Control/MarginContainer/VBoxContainer/Content/TabContainer/Graphics/Settings"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 18
+theme_override_colors/font_color = Color(0, 1, 1, 1)
 text = "Quality Preset"
 
-[node name="QualityOption" type="OptionButton" parent="MarginContainer/VBoxContainer/Content/TabContainer/Graphics/Settings"]
+[node name="QualityOption" type="OptionButton" parent="Control/MarginContainer/VBoxContainer/Content/TabContainer/Graphics/Settings"]
+custom_minimum_size = Vector2(0, 45)
 layout_mode = 2
+focus_mode = 2
 
-[node name="MaxFpsLabel" type="Label" parent="MarginContainer/VBoxContainer/Content/TabContainer/Graphics/Settings"]
+[node name="MaxFpsLabel" type="Label" parent="Control/MarginContainer/VBoxContainer/Content/TabContainer/Graphics/Settings"]
 layout_mode = 2
-text = "Max FPS (30-300)"
+theme_override_font_sizes/font_size = 18
+theme_override_colors/font_color = Color(0, 1, 1, 1)
+text = "Max FPS: 144"
 
-[node name="MaxFpsSlider" type="HSlider" parent="MarginContainer/VBoxContainer/Content/TabContainer/Graphics/Settings"]
+[node name="MaxFpsSlider" type="HSlider" parent="Control/MarginContainer/VBoxContainer/Content/TabContainer/Graphics/Settings"]
+custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
+focus_mode = 2
 min_value = 30.0
 max_value = 300.0
 value = 144.0
 tick_count = 10
 ticks_on_borders = true
 
-[node name="Audio" type="ScrollContainer" parent="MarginContainer/VBoxContainer/Content/TabContainer"]
+[node name="Audio" type="ScrollContainer" parent="Control/MarginContainer/VBoxContainer/Content/TabContainer"]
 visible = false
 layout_mode = 2
+horizontal_scroll_mode = 0
+metadata/_tab_name = "Audio"
 
-[node name="Settings" type="VBoxContainer" parent="MarginContainer/VBoxContainer/Content/TabContainer/Audio"]
+[node name="Settings" type="VBoxContainer" parent="Control/MarginContainer/VBoxContainer/Content/TabContainer/Audio"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_constants/separation = 15
+theme_override_constants/separation = 20
 
-[node name="MasterLabel" type="Label" parent="MarginContainer/VBoxContainer/Content/TabContainer/Audio/Settings"]
+[node name="MasterLabel" type="Label" parent="Control/MarginContainer/VBoxContainer/Content/TabContainer/Audio/Settings"]
 layout_mode = 2
-text = "Master Volume"
+theme_override_font_sizes/font_size = 18
+theme_override_colors/font_color = Color(0, 1, 1, 1)
+text = "Master Volume: 100%"
 
-[node name="MasterSlider" type="HSlider" parent="MarginContainer/VBoxContainer/Content/TabContainer/Audio/Settings"]
+[node name="MasterSlider" type="HSlider" parent="Control/MarginContainer/VBoxContainer/Content/TabContainer/Audio/Settings"]
+custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
+focus_mode = 2
 max_value = 1.0
 step = 0.01
 value = 1.0
 
-[node name="MusicLabel" type="Label" parent="MarginContainer/VBoxContainer/Content/TabContainer/Audio/Settings"]
+[node name="MusicLabel" type="Label" parent="Control/MarginContainer/VBoxContainer/Content/TabContainer/Audio/Settings"]
 layout_mode = 2
-text = "Music Volume"
+theme_override_font_sizes/font_size = 18
+theme_override_colors/font_color = Color(0, 1, 1, 1)
+text = "Music Volume: 80%"
 
-[node name="MusicSlider" type="HSlider" parent="MarginContainer/VBoxContainer/Content/TabContainer/Audio/Settings"]
+[node name="MusicSlider" type="HSlider" parent="Control/MarginContainer/VBoxContainer/Content/TabContainer/Audio/Settings"]
+custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
+focus_mode = 2
 max_value = 1.0
 step = 0.01
 value = 0.8
 
-[node name="SfxLabel" type="Label" parent="MarginContainer/VBoxContainer/Content/TabContainer/Audio/Settings"]
+[node name="SfxLabel" type="Label" parent="Control/MarginContainer/VBoxContainer/Content/TabContainer/Audio/Settings"]
 layout_mode = 2
-text = "SFX Volume"
+theme_override_font_sizes/font_size = 18
+theme_override_colors/font_color = Color(0, 1, 1, 1)
+text = "SFX Volume: 100%"
 
-[node name="SfxSlider" type="HSlider" parent="MarginContainer/VBoxContainer/Content/TabContainer/Audio/Settings"]
+[node name="SfxSlider" type="HSlider" parent="Control/MarginContainer/VBoxContainer/Content/TabContainer/Audio/Settings"]
+custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
+focus_mode = 2
 max_value = 1.0
 step = 0.01
 value = 1.0
 
-[node name="UiLabel" type="Label" parent="MarginContainer/VBoxContainer/Content/TabContainer/Audio/Settings"]
+[node name="UiLabel" type="Label" parent="Control/MarginContainer/VBoxContainer/Content/TabContainer/Audio/Settings"]
 layout_mode = 2
-text = "UI Volume"
+theme_override_font_sizes/font_size = 18
+theme_override_colors/font_color = Color(0, 1, 1, 1)
+text = "UI Volume: 70%"
 
-[node name="UiSlider" type="HSlider" parent="MarginContainer/VBoxContainer/Content/TabContainer/Audio/Settings"]
+[node name="UiSlider" type="HSlider" parent="Control/MarginContainer/VBoxContainer/Content/TabContainer/Audio/Settings"]
+custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
+focus_mode = 2
 max_value = 1.0
 step = 0.01
 value = 0.7
 
-[node name="MuteCheck" type="CheckButton" parent="MarginContainer/VBoxContainer/Content/TabContainer/Audio/Settings"]
+[node name="Spacer" type="Control" parent="Control/MarginContainer/VBoxContainer/Content/TabContainer/Audio/Settings"]
+custom_minimum_size = Vector2(0, 20)
 layout_mode = 2
+
+[node name="MuteCheck" type="CheckButton" parent="Control/MarginContainer/VBoxContainer/Content/TabContainer/Audio/Settings"]
+custom_minimum_size = Vector2(0, 45)
+layout_mode = 2
+focus_mode = 2
+theme_override_font_sizes/font_size = 18
 text = "Mute All Audio"
 
-[node name="Controls" type="ScrollContainer" parent="MarginContainer/VBoxContainer/Content/TabContainer"]
+[node name="Controls" type="ScrollContainer" parent="Control/MarginContainer/VBoxContainer/Content/TabContainer"]
 visible = false
 layout_mode = 2
+horizontal_scroll_mode = 0
+metadata/_tab_name = "Controls"
 
-[node name="Settings" type="VBoxContainer" parent="MarginContainer/VBoxContainer/Content/TabContainer/Controls"]
+[node name="Settings" type="VBoxContainer" parent="Control/MarginContainer/VBoxContainer/Content/TabContainer/Controls"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_constants/separation = 15
+theme_override_constants/separation = 20
 
-[node name="Info" type="Label" parent="MarginContainer/VBoxContainer/Content/TabContainer/Controls/Settings"]
+[node name="Info" type="Label" parent="Control/MarginContainer/VBoxContainer/Content/TabContainer/Controls/Settings"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_font_bold")
+theme_override_font_sizes/font_size = 22
+theme_override_colors/font_color = Color(0.498039, 0, 1, 1)
 text = "KEY BINDINGS"
 horizontal_alignment = 1
 
-[node name="MoveLeftLabel" type="Label" parent="MarginContainer/VBoxContainer/Content/TabContainer/Controls/Settings"]
+[node name="HSeparator" type="HSeparator" parent="Control/MarginContainer/VBoxContainer/Content/TabContainer/Controls/Settings"]
 layout_mode = 2
+
+[node name="MoveLeftLabel" type="Label" parent="Control/MarginContainer/VBoxContainer/Content/TabContainer/Controls/Settings"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+theme_override_colors/font_color = Color(0, 1, 1, 1)
 text = "Move Left"
 
-[node name="MoveLeftButton" type="Button" parent="MarginContainer/VBoxContainer/Content/TabContainer/Controls/Settings"]
+[node name="MoveLeftButton" type="Button" parent="Control/MarginContainer/VBoxContainer/Content/TabContainer/Controls/Settings"]
+custom_minimum_size = Vector2(0, 45)
 layout_mode = 2
+focus_mode = 2
 text = "A / Left Arrow"
 
-[node name="MoveRightLabel" type="Label" parent="MarginContainer/VBoxContainer/Content/TabContainer/Controls/Settings"]
+[node name="MoveRightLabel" type="Label" parent="Control/MarginContainer/VBoxContainer/Content/TabContainer/Controls/Settings"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 16
+theme_override_colors/font_color = Color(0, 1, 1, 1)
 text = "Move Right"
 
-[node name="MoveRightButton" type="Button" parent="MarginContainer/VBoxContainer/Content/TabContainer/Controls/Settings"]
+[node name="MoveRightButton" type="Button" parent="Control/MarginContainer/VBoxContainer/Content/TabContainer/Controls/Settings"]
+custom_minimum_size = Vector2(0, 45)
 layout_mode = 2
+focus_mode = 2
 text = "D / Right Arrow"
 
-[node name="JumpLabel" type="Label" parent="MarginContainer/VBoxContainer/Content/TabContainer/Controls/Settings"]
+[node name="JumpLabel" type="Label" parent="Control/MarginContainer/VBoxContainer/Content/TabContainer/Controls/Settings"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 16
+theme_override_colors/font_color = Color(0, 1, 1, 1)
 text = "Jump"
 
-[node name="JumpButton" type="Button" parent="MarginContainer/VBoxContainer/Content/TabContainer/Controls/Settings"]
+[node name="JumpButton" type="Button" parent="Control/MarginContainer/VBoxContainer/Content/TabContainer/Controls/Settings"]
+custom_minimum_size = Vector2(0, 45)
 layout_mode = 2
+focus_mode = 2
 text = "Space"
 
-[node name="Ability1Label" type="Label" parent="MarginContainer/VBoxContainer/Content/TabContainer/Controls/Settings"]
+[node name="Ability1Label" type="Label" parent="Control/MarginContainer/VBoxContainer/Content/TabContainer/Controls/Settings"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 16
+theme_override_colors/font_color = Color(0, 1, 1, 1)
 text = "Ability 1"
 
-[node name="Ability1Button" type="Button" parent="MarginContainer/VBoxContainer/Content/TabContainer/Controls/Settings"]
+[node name="Ability1Button" type="Button" parent="Control/MarginContainer/VBoxContainer/Content/TabContainer/Controls/Settings"]
+custom_minimum_size = Vector2(0, 45)
 layout_mode = 2
+focus_mode = 2
 text = "Q"
 
-[node name="Ability2Label" type="Label" parent="MarginContainer/VBoxContainer/Content/TabContainer/Controls/Settings"]
+[node name="Ability2Label" type="Label" parent="Control/MarginContainer/VBoxContainer/Content/TabContainer/Controls/Settings"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 16
+theme_override_colors/font_color = Color(0, 1, 1, 1)
 text = "Ability 2"
 
-[node name="Ability2Button" type="Button" parent="MarginContainer/VBoxContainer/Content/TabContainer/Controls/Settings"]
+[node name="Ability2Button" type="Button" parent="Control/MarginContainer/VBoxContainer/Content/TabContainer/Controls/Settings"]
+custom_minimum_size = Vector2(0, 45)
 layout_mode = 2
+focus_mode = 2
 text = "E"
 
-[node name="Ability3Label" type="Label" parent="MarginContainer/VBoxContainer/Content/TabContainer/Controls/Settings"]
+[node name="Ability3Label" type="Label" parent="Control/MarginContainer/VBoxContainer/Content/TabContainer/Controls/Settings"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 16
+theme_override_colors/font_color = Color(0, 1, 1, 1)
 text = "Ability 3"
 
-[node name="Ability3Button" type="Button" parent="MarginContainer/VBoxContainer/Content/TabContainer/Controls/Settings"]
+[node name="Ability3Button" type="Button" parent="Control/MarginContainer/VBoxContainer/Content/TabContainer/Controls/Settings"]
+custom_minimum_size = Vector2(0, 45)
 layout_mode = 2
+focus_mode = 2
 text = "R"
 
-[node name="ResetBindingsButton" type="Button" parent="MarginContainer/VBoxContainer/Content/TabContainer/Controls/Settings"]
+[node name="HSeparator2" type="HSeparator" parent="Control/MarginContainer/VBoxContainer/Content/TabContainer/Controls/Settings"]
 layout_mode = 2
+
+[node name="ResetBindingsButton" type="Button" parent="Control/MarginContainer/VBoxContainer/Content/TabContainer/Controls/Settings"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+focus_mode = 2
+theme_override_font_sizes/font_size = 18
 text = "Reset to Defaults"
 
-[node name="Gameplay" type="ScrollContainer" parent="MarginContainer/VBoxContainer/Content/TabContainer"]
+[node name="Gameplay" type="ScrollContainer" parent="Control/MarginContainer/VBoxContainer/Content/TabContainer"]
 visible = false
 layout_mode = 2
+horizontal_scroll_mode = 0
+metadata/_tab_name = "Gameplay"
 
-[node name="Settings" type="VBoxContainer" parent="MarginContainer/VBoxContainer/Content/TabContainer/Gameplay"]
+[node name="Settings" type="VBoxContainer" parent="Control/MarginContainer/VBoxContainer/Content/TabContainer/Gameplay"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_constants/separation = 15
+theme_override_constants/separation = 20
 
-[node name="ShowFpsCheck" type="CheckButton" parent="MarginContainer/VBoxContainer/Content/TabContainer/Gameplay/Settings"]
+[node name="ShowFpsCheck" type="CheckButton" parent="Control/MarginContainer/VBoxContainer/Content/TabContainer/Gameplay/Settings"]
+custom_minimum_size = Vector2(0, 45)
 layout_mode = 2
+focus_mode = 2
+theme_override_font_sizes/font_size = 18
 text = "Show FPS Counter"
 
-[node name="ShowPingCheck" type="CheckButton" parent="MarginContainer/VBoxContainer/Content/TabContainer/Gameplay/Settings"]
+[node name="ShowPingCheck" type="CheckButton" parent="Control/MarginContainer/VBoxContainer/Content/TabContainer/Gameplay/Settings"]
+custom_minimum_size = Vector2(0, 45)
 layout_mode = 2
 button_pressed = true
+focus_mode = 2
+theme_override_font_sizes/font_size = 18
 text = "Show Network Ping"
 
-[node name="ScreenShakeCheck" type="CheckButton" parent="MarginContainer/VBoxContainer/Content/TabContainer/Gameplay/Settings"]
+[node name="ScreenShakeCheck" type="CheckButton" parent="Control/MarginContainer/VBoxContainer/Content/TabContainer/Gameplay/Settings"]
+custom_minimum_size = Vector2(0, 45)
 layout_mode = 2
 button_pressed = true
+focus_mode = 2
+theme_override_font_sizes/font_size = 18
 text = "Screen Shake Effects"
 
-[node name="CameraSmoothingCheck" type="CheckButton" parent="MarginContainer/VBoxContainer/Content/TabContainer/Gameplay/Settings"]
+[node name="CameraSmoothingCheck" type="CheckButton" parent="Control/MarginContainer/VBoxContainer/Content/TabContainer/Gameplay/Settings"]
+custom_minimum_size = Vector2(0, 45)
 layout_mode = 2
 button_pressed = true
+focus_mode = 2
+theme_override_font_sizes/font_size = 18
 text = "Camera Smoothing"
 
-[node name="Buttons" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+[node name="Buttons" type="HBoxContainer" parent="Control/MarginContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_constants/separation = 20
+theme_override_constants/separation = 25
 alignment = 1
 
-[node name="ApplyButton" type="Button" parent="MarginContainer/VBoxContainer/Buttons"]
-custom_minimum_size = Vector2(200, 60)
+[node name="ApplyButton" type="Button" parent="Control/MarginContainer/VBoxContainer/Buttons"]
+custom_minimum_size = Vector2(220, 65)
 layout_mode = 2
+focus_mode = 2
+theme_override_font_sizes/font_size = 20
 text = "APPLY"
 
-[node name="ResetButton" type="Button" parent="MarginContainer/VBoxContainer/Buttons"]
-custom_minimum_size = Vector2(200, 60)
+[node name="ResetButton" type="Button" parent="Control/MarginContainer/VBoxContainer/Buttons"]
+custom_minimum_size = Vector2(220, 65)
 layout_mode = 2
+focus_mode = 2
+theme_override_font_sizes/font_size = 18
 text = "RESET TO DEFAULTS"
 
-[node name="BackButton" type="Button" parent="MarginContainer/VBoxContainer/Buttons"]
-custom_minimum_size = Vector2(200, 60)
+[node name="BackButton" type="Button" parent="Control/MarginContainer/VBoxContainer/Buttons"]
+custom_minimum_size = Vector2(220, 65)
 layout_mode = 2
+focus_mode = 2
+theme_override_font_sizes/font_size = 20
 text = "BACK"
