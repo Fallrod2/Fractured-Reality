@@ -157,10 +157,10 @@ func _on_settings_button_pressed() -> void:
 	print("Settings button pressed")
 	_play_ui_sound("click")
 
-	# Load options menu
+	# Load options menu (deferred to avoid Vulkan rendering conflicts)
 	var options_scene: PackedScene = load("res://scenes/ui/options_menu.tscn")
 	var options_menu: CanvasLayer = options_scene.instantiate()
-	get_tree().root.add_child(options_menu)
+	get_tree().root.call_deferred("add_child", options_menu)
 
 
 func _on_quit_button_pressed() -> void:
